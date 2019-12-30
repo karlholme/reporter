@@ -1,4 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { autoIncrement } = require('mongoose-plugin-autoinc');
+
 
 const faultReportSchema = new mongoose.Schema({
     header: { type: String, required: true, default: 'Felanmälan' },
@@ -10,4 +12,5 @@ const faultReportSchema = new mongoose.Schema({
     createdOn: { type: Date, default: Date.now }
 })
 
+faultReportSchema.plugin(autoIncrement, 'FaultReport');
 module.exports = mongoose.model('FaultReport', faultReportSchema)

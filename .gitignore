@@ -1,7 +1,7 @@
 *.cache/
 *coverage/
 *dist/
-*!dist/index.html
+!client/dist/index.html
 *node_modules/
 *.log
 *package-lock.json
