@@ -1,0 +1,181 @@
+:root {
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --input-inactive-bg-color: #f1f0f0;
+  --input-active-bg-color: #f1f0f0;
+  --pink: #f08aa9;
+  --dark-pink: #d46c8b;
+  --darker-pink: #be5474;
+  --input-active-border-bottom: var(--pink);
+  --input-inactive-border-bottom: #e6e3e3;
+  ;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.card {
+  margin-bottom: 1rem;
+  display: block;
+  /* 1 */
+  min-height: 4rem;
+}
+
+.card-block {
+  background-color: #fff;
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block;
+}
+
+body {
+  margin: auto;
+  width: 80%;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  position: relative;
+  max-width: 1226px;
+  min-width: 300px;
+}
+
+h1 {
+  font-family: Roboto;
+  margin-top: 2rem;
+  font-weight: 800;
+  color: var(--pink);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+fieldset {
+  border: 0;
+  margin: 1rem;
+  padding: 0 0 0.5rem 0;
+}
+
+label {
+  color: #222;
+  display: inline-block;
+  margin: 0.3rem 0 0.3rem 0;
+  padding-left: 0.1rem;
+  font-family: roboto, Arial, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 800;
+  text-align: left;
+}
+
+input[type=submit] {
+  border: 0;
+}
+
+input[type=text] {
+  background-color: var(--input-inactive-bg-color);
+  border-bottom-color: var(--input-inactive-border-bottom);
+  border-width: 0 0 2px;
+  height: 40px;
+  font-weight: 400;
+  line-height: 1.25;
+  cursor: text;
+  display: block;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 5px 12px 5px 12px;
+}
+
+input[type=text]:focus {
+  background-color: var(--input-active-bg-color);
+  border-bottom-color: var(--pink);
+  border-width: 0 0 2px;
+  outline: 0;
+}
+
+input[type=number] {
+  background-color: var(--input-inactive-bg-color);
+  border-bottom-color: var(--input-inactive-border-bottom);
+  border-width: 0 0 2px;
+  height: 40px;
+  font-weight: 400;
+  line-height: 1.25;
+  cursor: text;
+  display: block;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 5px 12px 5px 12px;
+}
+
+input[type=number]:focus {
+  background-color: var(--input-active-bg-color);
+  border-bottom-color: var(--pink);
+  border-width: 0 0 2px;
+  outline: 0;
+}
+
+textarea[type=text] {
+  background-color: #f1f1f1;
+  border-bottom-color: var(--input-inactive-border-bottom);
+  width: 100%;
+  border-width: 0 0 2px;
+  font-weight: 400;
+  line-height: 1.25;
+  cursor: text;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 5px 12px 5px 12px;
+}
+
+textarea[type=text]:focus {
+  background-color: #ebe7e7;
+  border-bottom-color: var(--pink);
+  border-width: 0 0 2px;
+  outline: 0;
+}
+
+.btn-primary {
+  background-color: var(--pink);
+  color: white;
+  font-size: 1.125rem;
+  font-family: Roboto;
+  font-weight: 600;
+  border-width: p;
+  padding: 0.5rem 1rem;
+  overflow: hidden;
+  transition: 200ms linear;
+  cursor: pointer;
+  outline: 0;
+  float: right;
+}
+
+.btn-primary:hover {
+  background-color: var(--dark-pink);
+}
+
+.btn-primary:active {
+  background-color: var(--darker-pink);
+  border: 1;
+}
+
+#wrapper {
+  display: flex;
+}
+
+#left {
+  flex: 0 0 65%;
+}
+
+#right {
+  flex: 1;
+}
