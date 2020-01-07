@@ -2290,6 +2290,9 @@ a.btn.disabled, fieldset:disabled a.btn {
     pointer-events: none;
 }
 
+/*
+This is instead in styles.css:
+
 .btn-primary {
     color: #fff;
     background-color: #007bff;
@@ -2321,6 +2324,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
+*/
 
 .btn-secondary {
     color: #fff;
@@ -2788,12 +2792,16 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-link {
     font-weight: 400;
-    color: #007bff;
+    color: #005aa0;
     text-decoration: none;
+    background: none;
+    border: 0px;
+    margin: 0.5rem 1rem;
+    text-decoration: underline
 }
 
 .btn-link:hover {
-    color: #0056b3;
+    color: #023963;
     text-decoration: underline;
 }
 
@@ -4298,8 +4306,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
 }
 
 .card>hr {
@@ -4347,8 +4353,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .card-header {
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .card-header:first-child {

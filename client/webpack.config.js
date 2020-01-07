@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+
 
 const config = {
   entry: [
@@ -21,25 +23,14 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ExtractTextWebpackPlugin.extract({
+          use:
+            'css-loader',
+        }),
       },
       {
-        test: /\.svg$/,
-        use: 'file-loader'
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
+        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
       }
     ]
   },
@@ -56,12 +47,16 @@ const config = {
     contentBase: './dist'
   },
   plugins: [
+    new ExtractTextWebpackPlugin('styles.css'),
     new LodashModuleReplacementPlugin,
     new HtmlWebpackPlugin({
-        template: require('html-webpack-template'),
-        inject: false,
-        appMountId: 'app',
-      })
+      template: require('html-webpack-template'),
+      inject: false,
+      appMountId: 'app',
+      title: 'Fault reporter',
+      lang: 'sv',
+      favicon: './assets/favicon.ico'
+    })
   ],
   optimization: {
     runtimeChunk: 'single',

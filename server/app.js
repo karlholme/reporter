@@ -10,7 +10,7 @@ app.set('port', (process.env.PORT || 8081))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors())
+app.use(cors({ origin: true, credentials: true }))
 
 app.use('/api', api)
 app.use(express.static('static'))

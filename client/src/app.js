@@ -3,6 +3,7 @@ import React from "react";
 import { hot } from 'react-hot-loader/root';
 import AddPageComponentMaker from './addPage/component';
 import headerImage from '../assets/bo_header_2018.png'
+import favicon from '../assets/favicon.ico'
 
 const AddPageComponent = AddPageComponentMaker();
 
@@ -19,20 +20,24 @@ class App extends React.Component {
     const { store } = this.props;
 
     return (
-      <div className="card">
-        <img className="img" width="500px" src={headerImage} alt="header image" />
-        {store.getState().navigation.page === 'startPage' && (
-          <AddPageComponent
-            store={store}
-            state={store.getState()}
-          />
-        )}
+      <React.Fragment>
+        <nav className="navbar navbar-inverse fixed-top">
+          <img className="img" width="300px" src={headerImage} alt="header image" />
+        </nav>
+        <div className="card mt-4">
+          {store.getState().navigation.page === 'startPage' && (
+            <AddPageComponent
+              store={store}
+              state={store.getState()}
+            />
+          )}
 
-        {store.getState().page === 'addPage' && (
-          <AddPageComponent />
-        )}
+          {store.getState().page === 'addPage' && (
+            <AddPageComponent />
+          )}
 
-      </div>
+        </div>
+      </React.Fragment>
     );
   }
 }

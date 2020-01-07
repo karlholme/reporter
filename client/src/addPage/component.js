@@ -1,71 +1,128 @@
 import React from "react";
+import { Select, FormControl, MenuItem } from '@material-ui/core';
 
 export default function () {
 
     function AddPageContent({ store, state }) {
         return (
-            <div className="card-block">
-                <h1>FELANMÄLAN</h1>
+            <div className="card">
+                <div className="card-header">
+                    <h1>FELANMÄLAN</h1>
+                </div>
 
-                <form>
-                    <div id="wrapper">
-
-                        <div id="left">
+                <div className="card-block">
+                    <form onSubmit={function (e) {
+                        e.preventDefault();
+                        store.dispatch({
+                            type: 'SEND_ADD_FORM',
+                            data: event.target.value,
+                            inputField: 'header'
+                        })
+                    }}>
+                        <div className="p-0 d-flex flex-row">
                             <fieldset>
                                 <label>Rubrik:</label>
                                 <input value={state.addReport.header}
                                     type="text"
                                     name="header"
                                     style={{ width: '300px' }}
+                                    placeholder="Rubrik"
                                     onChange={(event) => {
-                                        store.dispatch({ type: 'UPDATE_FORM', data: event.target.value, inputField: 'header' })
+                                        event.preventDefault();
+                                        store.dispatch({
+                                            type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                            data: event.target.value,
+                                            inputField: 'header'
+                                        })
                                     }} />
                             </fieldset>
-                        </div>
-
-                        <div id="right">
-                            <fieldset className="mb-5">
-                                <label className="float-right">Fastighetsnummer:</label>
+                            <fieldset>
+                                <label>Fastighetsnummer:</label>
                                 <input
-                                    className="float-right"
                                     value={state.addReport.propertyNumber}
-                                    style={{ width: '150px' }}
                                     type="number"
                                     name="propertynumber"
+                                    placeholder="Ex. 123"
                                     onChange={(event) => {
-                                        store.dispatch({ type: 'UPDATE_FORM', data: event.target.value, inputField: 'propertyNumber' })
+                                        event.preventDefault();
+                                        store.dispatch({
+                                            type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                            data: event.target.value,
+                                            inputField: 'propertyNumber'
+                                        })
                                     }} />
                             </fieldset>
                         </div>
-                    </div>
 
-                    <fieldset>
-                        <label>Plats:</label>
-                        <input value={state.addReport.place}
-                            type="text"
-                            name="place"
-                            style={{ width: '300px' }}
-                            onChange={(event) => {
-                                store.dispatch({ type: 'UPDATE_FORM', data: event.target.value, inputField: 'place' })
-                            }} />
-                    </fieldset>
+                        <fieldset>
+                            <label>Plats:</label>
+                            <input value={state.addReport.location}
+                                type="text"
+                                name="location"
+                                style={{ width: '300px' }}
+                                placeholder="Tex Köket"
+                                onChange={(event) => {
+                                    event.preventDefault();
+                                    store.dispatch({
+                                        type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                        data: event.target.value,
+                                        inputField: 'location'
+                                    })
+                                }} />
+                        </fieldset>
 
-                    <fieldset>
-                        <label>Beskrivning:</label>
-                        <textarea
-                            value={state.addReport.description}
-                            type="text"
-                            name="Beskrivning"
-                            maxLength="700"
-                            rows="4"
-                            placeholder="Beskriv felet här..."
-                            onChange={(event) => {
-                                store.dispatch({ type: 'UPDATE_FORM', data: event.target.value, inputField: 'description' })
-                            }} />
-                    </fieldset>
-                    <input className="btn-primary" type="submit" value="Skicka" />
-                </form>
-            </div>
+                        <fieldset>
+                            <label id="demo-simple-select-label">Gård:</label>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={state.addReport.reporter}
+                                onChange={(event) => {
+                                    event.preventDefault();
+                                    store.dispatch({
+                                        type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                        data: event.target.value,
+                                        inputField: 'reporter'
+                                    })
+                                }}>
+                                {state.addReport.reporters.map((reporter) => {
+                                    return <MenuItem
+                                        key={reporter}
+                                        value={reporter}>
+                                        {reporter}
+                                    </MenuItem>
+                                })}
+                            </Select>
+                        </fieldset>
+
+                        <fieldset>
+                            <label>Beskrivning:</label>
+                            <textarea
+                                value={state.addReport.description}
+                                type="text"
+                                name="Beskrivning"
+                                maxLength="700"
+                                rows="4"
+                                placeholder="Beskriv felet..."
+                                onChange={(event) => {
+                                    event.preventDefault();
+                                    store.dispatch({
+                                        type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                        data: event.target.value,
+                                        inputField: 'description'
+                                    })
+                                }} />
+                        </fieldset>
+                        <input className="btn-primary" type="submit" value="Skicka" />
+                        <button className="btn-link" onClick={(event) => {
+                            event.preventDefault();
+                            store.dispatch({
+                                type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                            })
+                        }}> Rensa</button>
+                    </form>
+                </div>
+            </div >
         )
     }
 
