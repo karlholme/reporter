@@ -1,9 +1,25 @@
-import React from "react";
-import { Select, FormControl, MenuItem } from '@material-ui/core';
+import React, { useEffect } from "react";
+import { Select, MenuItem } from '@material-ui/core';
+import * as requestProvider from '../requestProvider'
+import serviceEndpoints from '../../serviceEndpoints.json'
 
 export default function () {
-
     function AddPageContent({ store, state }) {
+
+        useEffect(() => {
+            store.dispatch({
+                type: 'CALL_SERVICE',
+                request: { hej: 1 },
+                service: serviceEndpoints.getReporters
+            })
+        }, []);
+
+        // console.log('hej', state)
+
+        if (!state.serviceCalls[serviceEndpoints.getReporters].response) {
+            return <div>hej</div>;
+        }
+
         return (
             <div className="card">
                 <div className="card-header">
@@ -14,9 +30,9 @@ export default function () {
                     <form onSubmit={function (e) {
                         e.preventDefault();
                         store.dispatch({
-                            type: 'SEND_ADD_FORM',
-                            data: event.target.value,
-                            inputField: 'header'
+                            type: 'CALL_SERVICE',
+                            request: requestProvider.getAddFaultReportRequest(state),
+                            service: serviceEndpoints.addFaultReport
                         })
                     }}>
                         <div className="p-0 d-flex flex-row">
@@ -85,11 +101,11 @@ export default function () {
                                         inputField: 'reporter'
                                     })
                                 }}>
-                                {state.addReport.reporters.map((reporter) => {
+                                {state.serviceCalls[serviceEndpoints.getReporters].response.map((reporter) => {
                                     return <MenuItem
-                                        key={reporter}
-                                        value={reporter}>
-                                        {reporter}
+                                        key={reporter.reporter}
+                                        value={reporter.reporter}>
+                                        {reporter.reporter}
                                     </MenuItem>
                                 })}
                             </Select>

@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import axios from 'axios';
+import * as serviceEndpoints from '../serviceEndpoints.json';
 
 const navigationDefaultState = {
     page: 'startPage',
@@ -17,6 +18,65 @@ function navigation(state = navigationDefaultState, action) {
     return state;
 }
 
+
+const serviceCallsState = {
+    [serviceEndpoints.addFaultReport]: {
+        isCalling: false,
+        response: null
+    },
+    [serviceEndpoints.getReporters]: {
+        isCalling: false,
+        response: null
+    },
+    [serviceEndpoints.getFaultReports]: {
+        isCalling: false,
+        response: null
+    },
+    [serviceEndpoints.addFaultReport]: {
+        isCalling: false,
+        response: null
+    }
+};
+
+function serviceCalls(state = serviceCallsState, action) {
+    if (action.type === 'CALL_SERVICE') {
+        console.info('Service called', action.service, 'with request', action.request);
+        axios.get(action.service, action.request)
+            .then((response) => {
+                console.log('OK', response)
+                store.dispatch({
+                    type: 'RECEIVE_SERVICE_RESPONSE',
+                    service: action.service,
+                    response: response.data
+                })
+            }).catch((response) => {
+                store.dispatch({
+                    type: 'RECEIVE_SERVICE_RESPONSE',
+                    service: action.service,
+                    response: response.response
+                })
+            });
+        return {
+            ...state,
+            [action.service]: {
+                ...state[action.service],
+                isCalling: true
+            }
+        };
+    } else if (action.type === 'RECEIVE_SERVICE_RESPONSE') {
+        // console.log(action.response);
+        return {
+            ...state,
+            [action.service]: {
+                isCalling: false,
+                response: action.response
+            }
+        }
+    }
+
+    return state;
+}
+
 /**
  * Add reports part
  */
@@ -27,9 +87,9 @@ const addReportDefaultState = {
     location: '',
     reporter: '',
     reporters: [
-        'SolgÃ¥rden',
+        'Solgården',
         'Solvik',
-        'StarrbÃ¤cken'
+        'Starrbäcken'
     ]
 }
 
@@ -41,28 +101,15 @@ function addReport(state = addReportDefaultState, action) {
         }
     } else if (action.type === 'CLEAN_ADD_FAULT_REPORT_FORM') {
         return addReportDefaultState;
-    } else if (action.type === 'SEND_ADD_FORM') {
-        axios.post('http://localhost:8081/api/addFaultReport', {
-            header: state.header,
-            description: state.description,
-            propertyNumber: state.propertyNumber,
-            location: state.location,
-            reporter: state.reporter
-        }).then((response) => {
-            console.log('OK', response.data);
-        }).catch((response) => {
-            console.log('ERROR', response.status, response.response);
-            console.log('With request', response.config.data);
-        });
-        return { ...state };
     }
 
     return addReportDefaultState;
 }
 
 const rootReducer = combineReducers({
-    navigation: navigation,
-    addReport: addReport
+    navigation,
+    serviceCalls,
+    addReport
 })
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

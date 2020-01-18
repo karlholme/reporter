@@ -1,0 +1,6 @@
+{
+    "addFaultReport": "http://localhost:8081/api/addFaultReport",
+    "addReporter": "http://localhost:8081/api/addReporter",
+    "getReporters": "http://localhost:8081/api/getReporters",
+    "getFaultReports": "http://localhost:8081/api/getFaultReports"
+}
