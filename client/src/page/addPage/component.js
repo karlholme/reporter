@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import * as requestProvider from '../../requestProvider'
 import serviceEndpoints from '../../../serviceEndpoints.json'
 import inputMaker from '../../components/input';
 import textAreaMaker from '../../components/textArea';
@@ -21,7 +20,7 @@ export default function () {
 
         useEffect(() => {
             store.dispatch({
-                type: 'CALL_SERVICE',
+                type: 'MAKE_GET_CALL_SERVICE',
                 request: {},
                 service: serviceEndpoints.getReporters
             })
@@ -44,7 +43,7 @@ export default function () {
                         <div style={{ display: 'flex' }}>
                             <Input
                                 title={'Rubrik'}
-                                value={state.addReport.header}
+                                value={core.getFaultReportField(state, 'header')}
                                 placeholder="Rubrik:"
                                 onChange={(event) => {
                                     event.preventDefault();
@@ -55,7 +54,7 @@ export default function () {
                                     })
                                 }} />
                             <Input title={'Fastighetsnummer:'}
-                                value={state.addReport.propertyNumber}
+                                value={core.getFaultReportField(state, 'propertyNumber')}
                                 type="number"
                                 placeholder="Ex. 123"
                                 style={{ width: '10rem' }}
@@ -68,7 +67,7 @@ export default function () {
                                     })
                                 }} />
                         </div>
-                        <Input value={state.addReport.location}
+                        <Input value={core.getFaultReportField(state, 'location')}
                             title={'Plats:'}
                             style={{ width: '300px' }}
                             placeholder="Tex Köket"
@@ -81,7 +80,7 @@ export default function () {
                                 })
                             }} />
                         <Dropdown title="Gård:"
-                            value={state.addReport.reporter}
+                            value={core.getFaultReportField(state, 'reporter')}
                             onChange={(event) => {
                                 event.preventDefault();
                                 store.dispatch({
@@ -94,7 +93,7 @@ export default function () {
                             placeholder={'Välj din gård..'}
                         />
                         <TextArea
-                            value={state.addReport.description}
+                            value={core.getFaultReportField(state, 'description')}
                             title="Beskrivning"
                             placeholder="Beskriv felet..."
                             onChange={(event) => {

@@ -2,9 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
-const EncodingPlugin = require('webpack-encoding-plugin');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = {
   entry: [
@@ -20,15 +18,15 @@ const config = {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
         exclude: /node_modules/
-      },
-      {
+      }, {
         test: /\.css$/,
-        use: ExtractTextWebpackPlugin.extract({
-          use:
-            'css-loader',
-        }),
-      },
-      {
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          }
+        ]
+      }, {
         test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
         loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
       }
@@ -38,16 +36,15 @@ const config = {
     extensions: [
       '.js',
       '.jsx'
-    ],
-    alias: {
-      'react-dom': '@hot-loader/react-dom'
-    }
+    ]
   },
   devServer: {
     contentBase: './dist'
   },
   plugins: [
-    new ExtractTextWebpackPlugin('styles.css'),
+    new MiniCssExtractPlugin({
+      filename: 'css/mystyles.css'
+    }),
     new LodashModuleReplacementPlugin,
     new HtmlWebpackPlugin({
       template: 'src/index.html',
@@ -56,9 +53,6 @@ const config = {
       title: 'Fault reporter',
       lang: 'sv',
       favicon: './assets/favicon.ico',
-      encoding: 'UTF-8'
-    }),
-    new EncodingPlugin({
       encoding: 'UTF-8'
     })
   ],

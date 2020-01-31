@@ -1,9 +1,15 @@
 import React from "react";
 import AddPageComponentMaker from './page/addPage/component';
-import headerImage from '../assets/bo_header_2018.png'
-import favicon from '../assets/favicon.ico'
+import receiptPageMaker from './page/recepitPage/component';
+import overViewPageMaker from './page/overViewPage/component';
+import headerImage from '../assets/bo_header_2018.png';
+import favicon from '../assets/favicon.ico';
+import * as core from './core';
+import serviceEndpoints from '../serviceEndpoints.json'
 
 const AddPageComponent = AddPageComponentMaker();
+const ReceiptPage = receiptPageMaker();
+const OverViewPage = overViewPageMaker();
 
 class App extends React.Component {
   componentDidMount() {
@@ -14,18 +20,30 @@ class App extends React.Component {
     })
   }
 
+  // IMPLEMENTERA BULMA
+
   render() {
     const { store } = this.props;
+    const state = store.getState();
 
     return (
       <React.Fragment>
         <nav className="navbar navbar-inverse fixed-top">
           <img className="img" width="300px" src={headerImage} alt="header image" />
         </nav>
-        {store.getState().navigation.page === 'startPage' && (
+        {core.getActivePage(state) === core.pages.overViewPage && (
+          <OverViewPage
+            store={store}
+            state={state}
+            triggerEvent={(event) => {
+
+            }}
+          />
+        )}
+        {core.getCurrentPage(state) === core.pages.addPage && (
           <AddPageComponent
             store={store}
-            state={store.getState()}
+            state={state}
             triggerEvent={(event) => {
               if (event.name === 'FAULT_REPORT_ADDED') {
                 store.dispatch({
@@ -33,19 +51,21 @@ class App extends React.Component {
                 })
               } else if (event.name === 'FORM_SUBMITTED')
                 store.dispatch({
-                  type: 'CALL_SERVICE',
-                  request: requestProvider.getAddFaultReportRequest(state),
+                  type: 'MAKE_POST_SERVICE_CALL',
+                  request: core.getAddFaultReportRequest(state),
                   service: serviceEndpoints.addFaultReport,
                   sideEffectWhenOkResponse: function () {
-                    triggerEvent({ name: 'FAULT-REPORT-ADDED' })
+                    store.dispatch({
+                      type: 'GO_TO_RECEIPT_PAGE'
+                    })
                   }
                 })
             }}
           />
         )}
 
-        {store.getState().page === 'addPage' && (
-          <AddPageComponent />
+        {core.getActivePage(state) === 'receiptPage' && (
+          <ReceiptPage />
         )}
       </React.Fragment>
     );

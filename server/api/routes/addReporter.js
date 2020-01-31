@@ -11,5 +11,4 @@ module.exports = function (router) {
             response.status(200).json(reporter)
         })
     })
-
 }

@@ -1,7 +1,7 @@
-- Bygga tjänst för att lägga till och hämta upp gårdar
+X Bygga tjänst för att lägga till och hämta upp gårdar
 - Bygga översikts-sida för att visa alla felanmälningar
 - Bygga detalj-sida för att visa enskild felanmälan
-- Fixa så att åäö lirar
-- Bygga metod för att veta när en tjänst håller på att hämtas, när den är efterfrågad och när svar finns
+X Fixa så att åäö lirar
+X Bygga metod för att veta när en tjänst håller på att hämtas, när den är efterfrågad och när svar finns
 
-- Bryt ut input till egna komponenter
+X Bryt ut input till egna komponenter
