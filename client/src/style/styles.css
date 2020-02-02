@@ -3,47 +3,19 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --input-inactive-bg-color: #f1f0f0;
   --input-active-bg-color: #f1f0f0;
-  --pink: #f08aa9;
-  --dark-pink: #d46c8b;
-  --darker-pink: #be5474;
-  --input-active-border-bottom: var(--pink);
+  --dark-night: rgb(0, 68, 80);
+  --light-night: rgb(0, 96, 114);
+  --minigrisrosa: rgb(242, 136, 168);
+  --dark-pink: rgb(228, 82, 119);
+  --darker-pink: rgb(189, 67, 97);
+  --hajkbanansgul: rgb(255, 233, 33);
+  --naranjas: rgb(253, 194, 39);
+  --adventuragrön: rgb(9, 176, 174);
+  --morning-mist: rgb(227, 237, 228);
+  --morning-shade: rgb(161, 196, 186);
+  --input-active-border-bottom: var(--dark-pink);
   --input-inactive-border-bottom: #e6e3e3;
-  ;
-}
-
-.card {
-  position: relative;
-  align-items: center;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  box-shadow: 0;
-}
-
-.card-block {
-  padding: 1rem 1.25rem 1.5rem;
-}
-
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-}
-
-.card-header:first-child {
-  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
-}
-
-.card-header+.list-group .list-group-item:first-child {
-  border-top: 0;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
+  --background: rgb(232, 232, 232);
 }
 
 html {
@@ -57,6 +29,12 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
+nav {
+  border-bottom: solid 2px;
+  border-color: #e8e8e8;
+  background-color: rgba(232, 232, 232, 0.3);
+}
+
 body {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -64,18 +42,38 @@ body {
   max-width: 800px;
   min-width: 300px;
   margin: auto;
+  background-color: var(--background);
 }
 
 h1 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  margin-top: 2rem;
+  font-size: 3rem;
+  margin: 1rem;
   font-weight: 900;
-  color: var(--pink);
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 0px 0.2rem 0px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: white;
+  text-shadow: 0px 0.2rem 0px rgba(0, 0, 0, 0.2);
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+hr {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  border: 0;
+  border-top: 1px solid #acacac;
 }
 
 fieldset {
@@ -118,7 +116,7 @@ input[type=text] {
 
 input[type=text]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--pink);
+  border-bottom-color: var(--dark-pink);
   outline: 0;
 }
 
@@ -135,7 +133,7 @@ input[type=number] {
 
 input[type=number]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--pink);
+  border-bottom-color: var(--dark-pink);
   outline: 0;
 }
 
@@ -155,18 +153,108 @@ textarea[type=text] {
 
 textarea[type=text]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--pink);
+  border-bottom-color: var(--dark-pink);
   outline: 0;
+}
+
+.card {
+  position: relative;
+  align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  box-shadow: 0;
+}
+
+.card-block {
+  padding: 1rem 1.25rem 1.5rem;
+  background-color: white;
+  border-radius: 0 0 0.5rem 0.5rem;
+  width: 100%;
+}
+
+.card-header {
+  background-color: var(--dark-pink);
+  padding: 0.75rem 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 0.3rem 0.3rem 0 0;
+  border-bottom: solid 4px rgba(0, 0, 0, 0.1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.font-arial {
+  font-family: "proxima-nova", Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: #272727;
+}
+
+.info-card {
+  background-color: #fff;
+  width: 90%;
+  margin: 1rem 1rem;
+  border-radius: 0.5rem;
+  border: solid 2px rgba(0, 0, 0, 0.1);
+}
+
+.info-card:hover {
+  cursor: pointer;
+  border: solid 2px var(--darker-pink);
+}
+
+.info-card-header {
+  background-color: var(--dark-pink);
+  border-radius: 0.3rem 0.3rem 0 0;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-bottom: solid var(--darker-pink);
+}
+
+.bg-pink {
+  background-color: var(--dark-pink);
+}
+
+.header {
+  padding: 10px 16px;
+  background: #f1f1f1;
+  margin-bottom: 2px black;
+  z-index: 1;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%
+}
+
+.sticky+.content {
+  padding-top: 75px;
+}
+
+.add-text-shadow {
+  text-shadow: 0px 0.2rem 0px rgba(0, 0, 0, 0.2)
 }
 
 /* Buttons */
 
 .btn-primary {
-  background-color: var(--pink);
+  background-color: var(--dark-pink);
+  border-radius: 0.3rem;
   color: white;
   font-size: 1.125rem;
   font-family: Roboto;
   font-weight: 800;
+  text-transform: uppercase;
   border-width: p;
   padding: 0.5rem 1rem;
   overflow: hidden;
@@ -224,12 +312,68 @@ textarea[type=text]:focus {
   pointer-events: none;
 }
 
+.btn-back {
+  color: #616161;
+  background: none;
+  border: none;
+  align-items: center;
+}
+
+.btn-back:hover {
+  color: #272727;
+}
+
+.btn-nav {
+  color: #fff;
+  background-color: var(--light-night);
+  font-size: 1.2rem;
+  font-family: Roboto;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02rem;
+  border-radius: 0.3rem;
+  border-width: 2px;
+  padding: 0.1rem 0.3rem;
+  margin: 0.5rem;
+  height: fit-content;
+  overflow: hidden;
+  transition: 200ms linear;
+  cursor: pointer;
+  outline: 0;
+  -webkit-transition: width 0.2s;
+  /* Safari prior 6.1 */
+  transition: width 0.2s;
+}
+
+.btn-nav:hover {
+  color: #fff;
+  background-color: var(--dark-night);
+}
+
+.btn-nav:focus {
+  outline: solid 3px var(--hajkbanansgul)
+}
+
+.btn-nav.disabled, .btn-nav:disabled {
+  color: #fff;
+  background-color: var(--morning-shade);
+}
+
+.btn-nav:not(:disabled):not(.disabled):active, .btn-nav:not(:disabled):not(.disabled).active, .show>.btn-nav.dropdown-toggle {
+  color: #fff;
+  background-color: var(--morning-shade);
+}
+
+.btn-nav:not(:disabled):not(.disabled):active:focus, .btn-nav:not(:disabled):not(.disabled).active:focus, .show>.btn-nav.dropdown-toggle:focus {
+  background-color: #004450;
+}
+
 /* Spinner */
 
 .loader {
   border: 16px solid #f3f3f3;
   /* Light grey */
-  border-top: 16px solid #333333;
+  border-top: 16px solid var(--dark-night);
   /* Blue */
   border-radius: 50%;
   width: 120px;
@@ -238,7 +382,7 @@ textarea[type=text]:focus {
 }
 
 .loaderSmall {
-  border: 5px solid var(--pink);
+  border: 5px solid var(--dark-pink);
   border-radius: 50%;
   border-top: 5px solid #f3f3f3;
   width: 20px;

@@ -2,19 +2,20 @@ import * as core from '../core';
 
 const defaultState = {
     page: core.getStartPage(),
+    selectedFaultReport: null
 };
 
 function navigation(state = defaultState, action) {
 
-    if (action.type === 'GO_TO_ADD_PAGE') {
+    if (action.type === 'GO_TO_PAGE') {
         return {
             ...state,
-            page: 'addPage'
+            page: action.page
         }
-    } else if (action.type === 'GO_TO_RECEIPT_PAGE') {
+    } else if (action.type === 'SET_CHOSEN_FAULT_REPORT') {
         return {
             ...state,
-            page: 'receiptPage'
+            selectedFaultReport: action.id
         }
     }
 

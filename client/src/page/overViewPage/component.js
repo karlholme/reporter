@@ -1,29 +1,19 @@
 import React, { useEffect } from "react";
 import _ from 'lodash';
 import serviceEndpoints from '../../../serviceEndpoints.json'
-import inputMaker from '../../components/input';
-import textAreaMaker from '../../components/textArea';
-import dropDownMaker from '../../components/dropdown';
-import buttonMaker from '../../components/button';
 import spinnerMaker from '../../components/spinner';
+import clickableCardMaker from '../../components/clickableCard';
 import * as core from '../../core';
 
 export default function () {
 
-    const Input = inputMaker();
-    const TextArea = textAreaMaker();
-    const Dropdown = dropDownMaker();
-    const Button = buttonMaker();
     const Spinner = spinnerMaker();
+    const ClickableCard = clickableCardMaker();
 
-    function OverviewContent({ state, store }) {
+    function OverviewContent({ state, triggerEvent }) {
 
         useEffect(() => {
-            store.dispatch({
-                type: 'MAKE_GET_CALL_SERVICE',
-                request: {},
-                service: serviceEndpoints.getFaultReports
-            })
+            triggerEvent({name: 'COMPONENT_MOUNTED'})
         }, []);
 
         if (_.isEmpty(core.getFaultReports(state))) {
@@ -31,19 +21,24 @@ export default function () {
         }
 
         return (
-            <React.Fragment>
+            <div className="card">
                 {core.getFaultReports(state).map(function (faultReport) {
                     return (
-                        <div key={faultReport.createdOn}>
-                            <h2>{faultReport.header}</h2>
-                            <p>{faultReport.createdOn}</p>
-                            <p>{faultReport.location}</p>
-                            <p>{faultReport.reporter}</p>
-                            <p>{faultReport.description}</p>
-                        </div>
+                        <ClickableCard
+                            key={faultReport.createdOn + faultReport._id}
+                            id={faultReport._id}
+                            header={faultReport.header}
+                            createdOn={faultReport.createdOn}
+                            location={faultReport.location}
+                            reporter={faultReport.reporter}
+                            description={faultReport.description}
+                            onClick={function () {
+                                triggerEvent({ name: 'CARD_PRESSED', id: faultReport._id })
+                            }}
+                        />
                     );
                 })}
-            </React.Fragment>
+            </div>
         )
     }
 

@@ -1,28 +1,27 @@
 import React, { useEffect } from "react";
 import serviceEndpoints from '../../../serviceEndpoints.json'
-import inputMaker from '../../components/input';
-import textAreaMaker from '../../components/textArea';
-import dropDownMaker from '../../components/dropdown';
-import buttonMaker from '../../components/button';
-import spinnerMaker from '../../components/spinner';
-// import * as core from '../../core';
+import clickableCardMaker from '../../components/clickableCard'
+import * as core from '../../core';
 
 export default function () {
 
-    const Input = inputMaker();
-    const TextArea = textAreaMaker();
-    const Dropdown = dropDownMaker();
-    const Button = buttonMaker();
-    const Spinner = spinnerMaker();
+    const ClickableCard = clickableCardMaker();
 
     function ReceiptContent({ store, state, triggerEvent }) {
         return (
             <div className="card">
                 <div className="card-header">
-                    <h1>FELANMÃ„LAN TILLAGD</h1>
+                    <h1>Felanmälan tillagd</h1>
                 </div>
                 <div className="card-block">
-                    {core.get}
+                    <ClickableCard
+                        id={core.getAddedFaultReport(state)._id}
+                        createdOn={core.getAddedFaultReport(state).createdOn}
+                        header={core.getAddedFaultReport(state).header}
+                        location={core.getAddedFaultReport(state).location}
+                        description={core.getAddedFaultReport(state).description}
+                        reporter={core.getAddedFaultReport(state).reporter}
+                    />
                 </div>
             </div>
         )

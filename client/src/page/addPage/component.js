@@ -16,14 +16,10 @@ export default function () {
     const Button = buttonMaker();
     const Spinner = spinnerMaker();
 
-    function AddPageContent({ store, state, triggerEvent }) {
+    function AddPageContent({ state, triggerEvent }) {
 
         useEffect(() => {
-            store.dispatch({
-                type: 'MAKE_GET_CALL_SERVICE',
-                request: {},
-                service: serviceEndpoints.getReporters
-            })
+            triggerEvent({ name: 'PAGE_MOUNTED' })
         }, []);
 
         if (!core.getServiceResponse(state, serviceEndpoints.getReporters)) {
@@ -33,22 +29,22 @@ export default function () {
         return (
             <div className="card">
                 <div className="card-header">
-                    <h1>FELANMÄLAN</h1>
+                    <h2>FELANMÄLAN</h2>
                 </div>
-                <div className="card-block">
+                <div className="card-block float-center">
                     <form onSubmit={function (e) {
                         e.preventDefault();
                         triggerEvent({ name: 'FORM_SUBMITTED' })
                     }}>
-                        <div style={{ display: 'flex' }}>
+                        <div className="d-flex">
                             <Input
                                 title={'Rubrik'}
                                 value={core.getFaultReportField(state, 'header')}
                                 placeholder="Rubrik:"
                                 onChange={(event) => {
                                     event.preventDefault();
-                                    store.dispatch({
-                                        type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                    triggerEvent({
+                                        name: 'FORM_UPDATED',
                                         data: event.target.value,
                                         inputField: 'header'
                                     })
@@ -60,8 +56,8 @@ export default function () {
                                 style={{ width: '10rem' }}
                                 onChange={(event) => {
                                     event.preventDefault();
-                                    store.dispatch({
-                                        type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                    triggerEvent({
+                                        name: 'FORM_UPDATED',
                                         data: event.target.value,
                                         inputField: 'propertyNumber'
                                     })
@@ -73,8 +69,8 @@ export default function () {
                             placeholder="Tex Köket"
                             onChange={(event) => {
                                 event.preventDefault();
-                                store.dispatch({
-                                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                triggerEvent({
+                                    name: 'FORM_UPDATED',
                                     data: event.target.value,
                                     inputField: 'location'
                                 })
@@ -83,8 +79,8 @@ export default function () {
                             value={core.getFaultReportField(state, 'reporter')}
                             onChange={(event) => {
                                 event.preventDefault();
-                                store.dispatch({
-                                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                triggerEvent({
+                                    name: 'FORM_UPDATED',
                                     data: event.target.value,
                                     inputField: 'reporter'
                                 })
@@ -98,27 +94,26 @@ export default function () {
                             placeholder="Beskriv felet..."
                             onChange={(event) => {
                                 event.preventDefault();
-                                store.dispatch({
-                                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                                triggerEvent({
+                                    name: 'FORM_UPDATED',
                                     data: event.target.value,
                                     inputField: 'description'
                                 })
                             }} />
 
                         <Button
-                            className="btn-primary"
+                            label="Skicka"
                             type="submit"
-                            value="Skicka"
                             spinner={!!core.isCallingService(state, serviceEndpoints.addFaultReport)}
                             disabled={!!core.isCallingService(state, serviceEndpoints.addFaultReport)}
                         />
                         <Button
-                            value={'Rensa'}
-                            className="btn-link"
+                            type="link"
+                            label={'Rensa'}
                             onClick={(event) => {
                                 event.preventDefault();
-                                store.dispatch({
-                                    type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                                triggerEvent({
+                                    name: 'CLEAN_PRESSED',
                                 })
                             }} />
                     </form>

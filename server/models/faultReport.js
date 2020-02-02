@@ -3,6 +3,7 @@ const { autoIncrement } = require('mongoose-plugin-autoinc');
 
 
 const faultReportSchema = new mongoose.Schema({
+    _id: Number,
     header: { type: String, required: true, default: 'Felanmälan' },
     description: { type: String, required: true },
     priority: { type: Number, min: 0, max: 1000 },

@@ -1,13 +1,15 @@
 import serviceEndpoints from '../serviceEndpoints.json';
 
 export const pages = {
-    overViewPage: 'OVERVIEW_PAGE',
-    detailsPage: 'DETAILS_PAGE',
-    addPage: 'ADD_PAGE'
+    overview: 'OVERVIEW_PAGE',
+    add: 'ADD_PAGE',
+    receipt: 'RECEIPT_PAGE',
+    details: 'DETAILS_PAGE',
+    admin: 'ADMIN_PAGE'
 }
 
 export function getStartPage() {
-    return pages.overViewPage;
+    return pages.overview;
 }
 
 export function getActivePage(state) {
@@ -47,4 +49,21 @@ export function getFaultReportField(state, field) {
 
 export function getFaultReports(state) {
     return getServiceResponse(state, serviceEndpoints.getFaultReports);
+}
+
+export function formatDate(date) {
+    const paresedDate = new Date(date);
+    return paresedDate.getDate()
+        + '/' + paresedDate.getMonth()
+        + '-' + paresedDate.getFullYear()
+        + '  - ' + paresedDate.getHours()
+        + ':' + paresedDate.getMinutes();
+}
+
+export function getAddedFaultReport(state) {
+    return getServiceResponse(state, serviceEndpoints.addFaultReport);
+}
+
+export function getChosenFaultReport(state) {
+    return getServiceResponse(state, serviceEndpoints.getFaultReports)[state.navigation.selectedFaultReport];
 }

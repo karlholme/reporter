@@ -58,24 +58,24 @@ function serviceCall(state = defaultState, action) {
         axios.post(action.service, action.request)
             .then((response) => {
                 console.log('OK', action.service, response.data)
-                if (action.sideEffectWhenOkResponse) {
-                    action.sideEffectWhenOkResponse();
-                }
                 store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
                     service: action.service,
                     response: response.data
                 })
+                if (action.sideEffectWhenOkResponse) {
+                    action.sideEffectWhenOkResponse();
+                }
             }).catch((response) => {
                 console.log('ERROR', action.service, response.data)
-                if (action.sideEffectWhenFailedResponse) {
-                    action.sideEffectWhenFailedResponse();
-                }
                 store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
                     service: action.service,
                     response: response.response,
                 })
+                if (action.sideEffectWhenFailedResponse) {
+                    action.sideEffectWhenFailedResponse();
+                }
             });
         return {
             ...state,

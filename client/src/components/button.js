@@ -5,28 +5,41 @@ const Spinner = spinnerMaker();
 
 export default function () {
     function ButtonContent({
-        value,
+        label,
         className,
         type,
         style,
         disabled,
         spinner,
-        onChange
+        onClick
     }) {
         return (
             <button
-                className={className}
+                className={{
+                    link: 'btn-link',
+                    nav: 'btn-nav',
+                    primary: 'btn-primary',
+                    submit: 'btn-primary',
+                    back: 'btn-back align-items-center'
+                }[type]}
                 disabled={disabled}
                 type={type}
                 style={style}
-                onClick={onChange}>
-                <span style={{ display: 'flex' }}>
-                    <span style={{ marginRight: '0.5rem' }}>{value}</span>
-                    {spinner &&
-                        <Spinner className="loaderSmall" />
-                    }
+                onClick={onClick} >
+                <span className="d-flex p-1 align-items-center">
+                    {type === 'back' && (<i class="material-icons">keyboard_backspace</i>)}
+                    <span className={{
+                        link: '',
+                        nav: 'add-text-shadow',
+                        primary: 'add-text-shadow',
+                        submit: 'add-text-shadow',
+                        back: ''
+                    }[type]}>
+                        {label}
+                    </span>
+                    {spinner && <Spinner className="ml-1 loaderSmall" />}
                 </span>
-            </button>
+            </button >
         );
     }
 
