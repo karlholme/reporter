@@ -25,8 +25,7 @@ export function isCallingService(state, service) {
 }
 
 export function getReporters(state) {
-    return getServiceResponse(state, [serviceEndpoints.getReporters])
-        .map((reporter) => reporter.reporter);
+    return getServiceResponse(state, [serviceEndpoints.getReporters]);
 }
 
 export function getAddFaultReportRequest(state) {

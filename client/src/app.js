@@ -4,6 +4,7 @@ import AddPageComponentMaker from './page/addPage/component';
 import receiptPageMaker from './page/recepitPage/component';
 import overviewPageMaker from './page/overViewPage/component';
 import detailsPageMaker from './page/detailPage/component';
+import adminPageMaker from './page/adminPage/component';
 
 import headerImage from '../assets/bo_header_2018.png';
 import favicon from '../assets/favicon.ico';
@@ -16,6 +17,7 @@ const AddPageComponent = AddPageComponentMaker();
 const ReceiptPage = receiptPageMaker();
 const OverviewPage = overviewPageMaker();
 const DetailsPage = detailsPageMaker();
+const AdminPage = adminPageMaker();
 
 const Button = buttonMaker();
 
@@ -28,8 +30,6 @@ class App extends React.Component {
     })
   }
 
-  // IMPLEMENTERA BULMA
-
   render() {
     const { store } = this.props;
     const state = store.getState();
@@ -41,6 +41,17 @@ class App extends React.Component {
             <img className="img" width="300px" src={headerImage} alt="header image" />
           </div>
           <div>
+            <Button
+              type="nav"
+              label={'Admin'}
+              onClick={function () {
+                store.dispatch({
+                  type: 'GO_TO_PAGE',
+                  page: core.pages.admin
+                })
+              }}
+            />
+
             <Button
               type="nav"
               label={'Översikt'}
@@ -63,6 +74,7 @@ class App extends React.Component {
                 })
               }}
             />
+
           </div>
         </nav>
         <div className="content">
@@ -139,6 +151,35 @@ class App extends React.Component {
                 } else if (event.name === 'CLEAN_PRESSED') {
                   store.dispatch({
                     type: 'CLEAN_ADD_FAULT_REPORT_FORM'
+                  })
+                }
+              }}
+            />
+          )}
+
+          {core.getCurrentPage(state) === core.pages.admin && (
+            <AdminPage
+              store={store}
+              state={state}
+              triggerEvent={(event) => {
+                if (event.name === 'PAGE_MOUNTED') {
+                  store.dispatch({
+                    type: 'MAKE_GET_CALL_SERVICE',
+                    request: {},
+                    service: serviceEndpoints.getReporters
+                  })
+                } else if (event.name === 'REMOVE_REPORTER_CLICKED') {
+                  store.dispatch({
+                    type: 'MAKE_PUT_CALL_SERVICE',
+                    request: { id: event.id },
+                    service: serviceEndpoints.removeReporter,
+                    sideEffectWhenOkResponse: function () {
+                      store.dispatch({
+                        type: 'MAKE_GET_CALL_SERVICE',
+                        request: {},
+                        service: serviceEndpoints.getReporters
+                      })
+                    }
                   })
                 }
               }}

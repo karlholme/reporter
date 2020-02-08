@@ -13,11 +13,12 @@ export default function () {
     function OverviewContent({ state, triggerEvent }) {
 
         useEffect(() => {
-            triggerEvent({name: 'COMPONENT_MOUNTED'})
+            triggerEvent({ name: 'COMPONENT_MOUNTED' })
         }, []);
 
         if (_.isEmpty(core.getFaultReports(state))) {
-            return <Spinner />;
+            return (
+                <div className="d-flex justify-content-center m-5"><Spinner /></div>);
         }
 
         return (

@@ -16,7 +16,7 @@ export default function () {
             <React.Fragment>
                 <Button
                     type="back"
-                    label="Tillbaks till översikten"
+                    label="tillbaka till översikten"
                     onClick={function () {
                         triggerEvent({ name: 'BACK_PRESSED' })
                     }}
@@ -24,16 +24,16 @@ export default function () {
                 </Button>
 
                 <div className="card">
-                    <div className="d-flex flex-row align-items-center card-header text-white">
+                    <div className="d-flex flex-row align-items-center card-header">
                         <h2 className="flex-grow-1">{(_id || '') + '. ' + header}</h2>
                         <div className="d-flex flex-column text-right ml-1">
-                            <span className="text-nowrap ml-2">
+                            <span className="text-nowrap ml-2 text-white">
                                 {status}
                             </span>
-                            <span className="text-nowrap ml-2">
+                            <span className="text-nowrap ml-2 text-white">
                                 {core.formatDate(createdOn)}
                             </span>
-                            <span className="text-nowrap ml-3 font-weight-bold">
+                            <span className="text-nowrap ml-3 font-weight-bold text-white">
                                 {reporter}
                             </span>
                         </div>

@@ -25,6 +25,7 @@ app.use(function (req, res) {
 
 //  MongoDB connection 
 const mongoose = require("mongoose")
+mongoose.set('debug', true);
 mongoose.connect('mongodb://localhost:27017/faultReports', { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection

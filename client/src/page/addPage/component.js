@@ -23,7 +23,7 @@ export default function () {
         }, []);
 
         if (!core.getServiceResponse(state, serviceEndpoints.getReporters)) {
-            return <Spinner />;
+            return (<div className="d-flex justify-content-center m-5"><Spinner /></div>);
         }
 
         return (
@@ -85,7 +85,7 @@ export default function () {
                                     inputField: 'reporter'
                                 })
                             }}
-                            alternatives={core.getReporters(state)}
+                            alternatives={core.getReporters(state).map((reporter) => reporter.reporter)}
                             placeholder={'Välj din gård..'}
                         />
                         <TextArea

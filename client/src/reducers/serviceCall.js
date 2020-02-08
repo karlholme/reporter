@@ -41,9 +41,42 @@ function serviceCall(state = defaultState, action) {
                     action.sideEffectWhenFailedResponse();
                 }
                 store.dispatch({
+                    type: 'RECEIVE_ERROR',
+                    service: action.service,
+                    error: response.response.data,
+                })
+            });
+        return {
+            ...state,
+            [action.service]: {
+                ...state[action.service],
+                isCalling: true
+            }
+        };
+    } if (action.type === 'MAKE_PUT_CALL_SERVICE') {
+        console.log('Delete -', action.service, ', request:', action.request);
+
+        axios.put(action.service, action.request)
+            .then((response) => {
+                console.log('OK', action.service, response.data)
+                console.log(action.sideEffectWhenOkResponse);
+                if (action.sideEffectWhenOkResponse) {
+                    action.sideEffectWhenOkResponse();
+                }
+                store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
                     service: action.service,
-                    response: response.response,
+                    response: response.data
+                })
+            }).catch((response) => {
+                console.log('ERROR', action.service, response.response.data)
+                if (action.sideEffectWhenFailedResponse) {
+                    action.sideEffectWhenFailedResponse();
+                }
+                store.dispatch({
+                    type: 'RECEIVE_ERROR',
+                    service: action.service,
+                    error: response.response.data,
                 })
             });
         return {
@@ -69,9 +102,9 @@ function serviceCall(state = defaultState, action) {
             }).catch((response) => {
                 console.log('ERROR', action.service, response.data)
                 store.dispatch({
-                    type: 'RECEIVE_SERVICE_RESPONSE',
+                    type: 'RECEIVE_ERROR',
                     service: action.service,
-                    response: response.response,
+                    error: response.response.data,
                 })
                 if (action.sideEffectWhenFailedResponse) {
                     action.sideEffectWhenFailedResponse();
@@ -85,12 +118,21 @@ function serviceCall(state = defaultState, action) {
             }
         };
     } else if (action.type === 'RECEIVE_SERVICE_RESPONSE') {
-        // console.log(action.response);
+        console.log('Response: ', action.service, action.response);
         return {
             ...state,
             [action.service]: {
                 isCalling: false,
                 response: action.response
+            }
+        }
+    } else if (action.type === 'RECEIVE_ERROR') {
+        console.log('Response: ', action.service, action.error);
+        return {
+            ...state,
+            [action.service]: {
+                isCalling: false,
+                error: action.error
             }
         }
     }
