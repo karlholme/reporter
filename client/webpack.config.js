@@ -38,6 +38,7 @@ const config = {
       '.jsx'
     ]
   },
+  devtool: 'eval-source-map',
   devServer: {
     contentBase: './dist'
   },

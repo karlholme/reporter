@@ -3,12 +3,13 @@ import React from "react";
 export default function () {
     function TextAreaContent({
         title,
+        className,
         placeHolder,
         value,
         onChange,
     }) {
         return (
-            <fieldset>
+            <fieldset className={className}>
                 <label>{title}</label>
                 <textarea
                     value={value}

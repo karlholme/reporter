@@ -3,6 +3,7 @@ import React from "react";
 export default function () {
     function InputContent({
         title,
+        className,
         value,
         type = 'text',
         style = { width: '300px' },
@@ -10,8 +11,8 @@ export default function () {
         onChange
     }) {
         return (
-            <fieldset>
-                <label>{title}</label>
+            <fieldset className={className}>
+                {title && <label>{title}</label>}
                 <input
                     value={value}
                     type={type}

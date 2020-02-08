@@ -17,12 +17,11 @@ export default function () {
             <button
                 className={{
                     link: 'btn-link',
-                    nav: 'btn-nav',
                     primary: 'btn-primary',
                     submit: 'btn-primary',
                     back: 'btn-back align-items-center',
                     delete: 'btn-delete'
-                }[type]}
+                }[type] + ' ' + className}
                 disabled={disabled}
                 type={type}
                 style={style}

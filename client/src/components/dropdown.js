@@ -1,29 +1,32 @@
 import React from "react";
-import { Select, MenuItem } from '@material-ui/core';
 
 export default function () {
     function DropdownContent({
         title,
+        className,
+        style,
         value,
         onChange,
-        alternatives,
+        alternatives = [],
     }) {
         return (
-            <fieldset>
-                <label id="label">{title}</label>
-                <Select
-                    displayEmpty
-                    id="label"
-                    value={value}
+            <fieldset className={className} style={style}>
+                <label className="mr-1" id={title}>{title}</label>
+                <select
+                    style={style}
+                    id={title}
+                    value={value || ''}
                     onChange={onChange}>
+                    <option
+                        disabled
+                        style={{ display: 'none' }}
+                        value="">
+                        {'Välj gård:'}
+                    </option>
                     {alternatives.map((alternative) => {
-                        return <MenuItem
-                            key={alternative}
-                            value={alternative}>
-                            {alternative}
-                        </MenuItem>
+                        return <option key={alternative} value={alternative}>{alternative}</option>
                     })}
-                </Select>
+                </select>
             </fieldset>
         );
     }

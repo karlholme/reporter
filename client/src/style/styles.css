@@ -1,8 +1,6 @@
 :root {
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --input-inactive-bg-color: #f1f0f0;
-  --input-active-bg-color: #f1f0f0;
   --dark-night: rgb(0, 68, 80);
   --light-night: rgb(0, 96, 114);
   --minigrisrosa: rgb(242, 136, 168);
@@ -13,7 +11,9 @@
   --adventuragrön: rgb(9, 176, 174);
   --morning-mist: rgb(227, 237, 228);
   --morning-shade: rgb(161, 196, 186);
-  --input-active-border-bottom: var(--dark-pink);
+  --input-inactive-bg-color: #f1f0f0;
+  --input-active-bg-color: #f1f0f0;
+  --input-active-border-bottom: var(--light-night);
   --input-inactive-border-bottom: #e6e3e3;
   --background: rgb(232, 232, 232);
 }
@@ -47,7 +47,7 @@ body {
 
 h1 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 1rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -57,6 +57,7 @@ h1 {
 
 h2 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1.5rem;
   color: white;
   text-shadow: 0px 0.2rem 0px rgba(0, 0, 0, 0.2);
   margin: 0.5rem 0.5rem 0.5rem 0;
@@ -67,7 +68,7 @@ h2 {
 h3 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   color: black;
-  text-shadow: 0px 0.2rem 0px rgba(255, 255, 255, 0.2);
+  text-shadow: 0px 0.1rem 0px rgba(0, 0, 0, 0.1);
   margin: 0.5rem 0.5rem 0.5rem 0;
   font-weight: 900;
   text-transform: uppercase;
@@ -87,22 +88,50 @@ hr {
 
 fieldset {
   border: 0;
-  margin: 0.5rem 1rem;
-  padding: 0 0 0.5rem 0;
+  padding: 0;
+  margin: 0;
   display: block;
 }
 
 label {
-  color: #222;
   display: inline-block;
-  margin: 0.3rem 0 0.3rem 0;
-  padding-left: 0.1rem;
-  font-family: roboto, Arial, "Helvetica Neue", sans-serif;
+  margin: 0.25rem;
   font-size: 16px;
   line-height: 1.25;
   font-weight: 800;
   text-align: left;
   width: 100%;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: black;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+select {
+  background-color: var(--input-inactive-bg-color);
+  border-bottom-color: var(--input-inactive-border-bottom);
+  transition: border-bottom-color 0.2s;
+  border-width: 0 0 3px;
+  border-radius: 0.3rem;
+  height: 2.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+  cursor: text;
+  display: block;
+  font-size: 16px;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+  padding: 5px 12px 5px 12px;
+}
+
+select:focus {
+  border-bottom-color: var(--input-inactive-border-bottom);
+  background-color: var(--input-active-bg-color);
+  border-bottom-color: var(--input-active-border-bottom);
+  outline: 0;
+}
+
+option:disabled {
+  color: #fff;
 }
 
 input {
@@ -110,6 +139,7 @@ input {
   border-bottom-color: var(--input-inactive-border-bottom);
   transition: border-bottom-color 0.2s;
   border-width: 0 0 3px;
+  border-radius: 0.3rem;
 }
 
 input[type=text] {
@@ -125,7 +155,7 @@ input[type=text] {
 
 input[type=text]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--dark-pink);
+  border-bottom-color: var(--input-active-border-bottom);
   outline: 0;
 }
 
@@ -142,7 +172,7 @@ input[type=number] {
 
 input[type=number]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--dark-pink);
+  border-bottom-color: var(--input-active-border-bottom);
   outline: 0;
 }
 
@@ -158,11 +188,12 @@ textarea[type=text] {
   font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   padding: 5px 12px 5px 12px;
+  border-radius: 0.3rem;
 }
 
 textarea[type=text]:focus {
   background-color: var(--input-active-bg-color);
-  border-bottom-color: var(--dark-pink);
+  border-bottom-color: var(--input-active-border-bottom);
   outline: 0;
 }
 
@@ -188,11 +219,11 @@ textarea[type=text]:focus {
 
 .card-header {
   background-color: var(--light-night);
-  padding: 0.75rem 1.25rem;
+  padding: 0.5rem 1.25rem;
   margin-top: 1rem;
   margin-bottom: 0;
   width: 100%;
-  border-radius: 0.3rem 0.3rem 0 0;
+  border-radius: 0.2rem 0.2rem 0 0;
   border-bottom: solid 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -257,57 +288,61 @@ textarea[type=text]:focus {
 /* Buttons */
 
 .btn-primary {
+  color: #fff;
   background-color: var(--light-night);
-  border-radius: 0.3rem;
-  color: white;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   font-family: Roboto;
   font-weight: 800;
   text-transform: uppercase;
-  border-width: p;
-  padding: 0.5rem 1rem;
+  letter-spacing: 0.02rem;
+  border-radius: 0.3rem;
+  border-width: 2px;
+  height: fit-content;
   overflow: hidden;
   transition: 200ms linear;
   cursor: pointer;
   outline: 0;
-  border: 0;
   -webkit-transition: width 0.2s;
   /* Safari prior 6.1 */
   transition: width 0.2s;
 }
 
 .btn-primary:hover {
-  background-color: var(--dark-pink);
+  color: #fff;
+  background-color: var(--dark-night);
 }
 
-.btn-primary:active {
-  background-color: var(--darker-pink);
-  border: 1;
+.btn-primary:focus {
+  outline: solid 3px var(--hajkbanansgul)
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
-  color: rgb(163, 162, 162);
-  background-color: #cccccc;
-  border-color: #acacac;
+  color: #fff;
+  background-color: var(--morning-shade);
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #803f52;
+  background-color: var(--morning-shade);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  background-color: #004450;
 }
 
 .btn-link {
-  font-weight: 400;
-  color: #005aa0;
-  text-decoration: none;
+  font-weight: normal;
+  font-family: var(--font-family-sans-serif);
+  color: var(--light-night);
   background: none;
   border: 0px;
-  margin: 0.5rem 1rem;
-  text-decoration: underline
+  font-size: 1.1rem;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .btn-link:hover {
-  color: #023963;
+  color: var(--dark-night);
   text-decoration: underline;
 }
 
@@ -330,51 +365,6 @@ textarea[type=text]:focus {
 
 .btn-back:hover {
   color: #272727;
-}
-
-.btn-nav {
-  color: #fff;
-  background-color: var(--light-night);
-  font-size: 1.2rem;
-  font-family: Roboto;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.02rem;
-  border-radius: 0.3rem;
-  border-width: 2px;
-  padding: 0.1rem 0.3rem;
-  margin: 0.5rem;
-  height: fit-content;
-  overflow: hidden;
-  transition: 200ms linear;
-  cursor: pointer;
-  outline: 0;
-  -webkit-transition: width 0.2s;
-  /* Safari prior 6.1 */
-  transition: width 0.2s;
-}
-
-.btn-nav:hover {
-  color: #fff;
-  background-color: var(--dark-night);
-}
-
-.btn-nav:focus {
-  outline: solid 3px var(--hajkbanansgul)
-}
-
-.btn-nav.disabled, .btn-nav:disabled {
-  color: #fff;
-  background-color: var(--morning-shade);
-}
-
-.btn-nav:not(:disabled):not(.disabled):active, .btn-nav:not(:disabled):not(.disabled).active, .show>.btn-nav.dropdown-toggle {
-  color: #fff;
-  background-color: var(--morning-shade);
-}
-
-.btn-nav:not(:disabled):not(.disabled):active:focus, .btn-nav:not(:disabled):not(.disabled).active:focus, .show>.btn-nav.dropdown-toggle:focus {
-  background-color: #004450;
 }
 
 .btn-delete {
@@ -444,78 +434,4 @@ textarea[type=text]:focus {
   100% {
     transform: rotate(360deg);
   }
-}
-
-/* Classes that overrides material-UIs classes */
-
-.MuiSelect-root {
-  transition: none !important;
-  width: 300px !important;
-}
-
-.MuiSelect-selectMenu {
-  height: 1.5rem !important;
-  width: 300px !important;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.MuiSelect-select {
-  cursor: pointer;
-  min-width: 16px;
-  width: 268px !important;
-  user-select: none;
-  border-radius: 0;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-
-.MuiInputBase-input {
-  font: inherit;
-  color: currentColor;
-  border: 0;
-  margin: 0;
-  display: block;
-  padding: 0.5rem 1rem !important;
-  min-width: 0;
-  background-color: var(--input-inactive-bg-color) !important;
-  box-sizing: content-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.MuiInput-underline:before {
-  transition: border-bottom-color 0.2s !important;
-  border-bottom: 3px solid var(--input-inactive-border-bottom) !important;
-  width: 300px !important;
-}
-
-.MuiInput-underline:after {
-  transition: border-bottom-color 0.2s !important;
-  border-bottom: 3px solid var(--input-active-border-bottom) !important;
-  width: 300px !important;
-}
-
-.MuiListItem-button {
-  transition: none !important;
-  width: 300px !important;
-}
-
-.MuiSelect-icon {
-  top: calc(50% - 12px);
-  color: rgba(0, 0, 0, 0.54);
-  left: 270px !important;
-  position: absolute;
-  pointer-events: none;
-}
-
-.MuiSvgIcon-root {
-  fill: currentColor;
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  font-size: 1.5rem;
-  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  flex-shrink: 0;
-  user-select: none;
 }

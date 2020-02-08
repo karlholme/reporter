@@ -3,7 +3,8 @@ const defaultState = {
     description: '',
     propertyNumber: '',
     location: '',
-    reporter: ''
+    reporter: '',
+    addReporter: ''
 }
 
 function addReport(state = defaultState, action) {

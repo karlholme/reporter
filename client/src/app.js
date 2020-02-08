@@ -42,8 +42,9 @@ class App extends React.Component {
           </div>
           <div>
             <Button
-              type="nav"
+              type="primary"
               label={'Admin'}
+              className="m-1"
               onClick={function () {
                 store.dispatch({
                   type: 'GO_TO_PAGE',
@@ -53,10 +54,10 @@ class App extends React.Component {
             />
 
             <Button
-              type="nav"
+              type="primary"
               label={'Översikt'}
+              className="m-1"
               onClick={function () {
-                console.log('CLICKED')
                 store.dispatch({
                   type: 'GO_TO_PAGE',
                   page: core.pages.overview
@@ -65,8 +66,9 @@ class App extends React.Component {
             />
 
             <Button
-              type="nav"
+              type="primary"
               label={'Ny felanmälan'}
+              className="m-1"
               onClick={function () {
                 store.dispatch({
                   type: 'GO_TO_PAGE',
@@ -168,12 +170,34 @@ class App extends React.Component {
                     request: {},
                     service: serviceEndpoints.getReporters
                   })
+                } else if (event.name === 'FORM_UPDATED') {
+                  store.dispatch({
+                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                    data: event.data,
+                    inputField: event.inputField
+                  })
                 } else if (event.name === 'REMOVE_REPORTER_CLICKED') {
                   store.dispatch({
-                    type: 'MAKE_PUT_CALL_SERVICE',
+                    type: 'MAKE_PUT_SERVICE_CALL',
                     request: { id: event.id },
                     service: serviceEndpoints.removeReporter,
                     sideEffectWhenOkResponse: function () {
+                      store.dispatch({
+                        type: 'MAKE_GET_CALL_SERVICE',
+                        request: {},
+                        service: serviceEndpoints.getReporters
+                      })
+                    }
+                  })
+                } else if (event.name === 'REPORTER_ADDED') {
+                  store.dispatch({
+                    type: 'MAKE_POST_SERVICE_CALL',
+                    request: { reporter: event.reporter },
+                    service: serviceEndpoints.addReporter,
+                    sideEffectWhenOkResponse: function () {
+                      store.dispatch({
+                        type: 'CLEAN_ADD_FAULT_REPORT_FORM'
+                      })
                       store.dispatch({
                         type: 'MAKE_GET_CALL_SERVICE',
                         request: {},
