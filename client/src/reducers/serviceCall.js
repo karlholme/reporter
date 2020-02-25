@@ -15,6 +15,10 @@ const defaultState = {
         isCalling: false,
         response: null
     },
+    [serviceEndpoints.updateFaultReport]: {
+        isCalling: false,
+        response: null
+    },
     [serviceEndpoints.addFaultReport]: {
         isCalling: false,
         response: null
@@ -27,107 +31,121 @@ const defaultState = {
 
 function serviceCall(state = defaultState, action) {
     if (action.type === 'MAKE_GET_CALL_SERVICE') {
-        axios.get(action.service, action.request)
+        axios.get(action.data.service, action.data.request)
             .then((response) => {
-                if (action.sideEffectWhenOkResponse) {
-                    action.sideEffectWhenOkResponse();
+                if (action.data.sideEffectWhenOkResponse) {
+                    action.data.sideEffectWhenOkResponse();
                 }
                 store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
-                    service: action.service,
-                    response: response.data
+                    data: {
+                        service: action.data.service,
+                        response: response.data
+                    }
                 })
             }).catch((error) => {
-                if (action.sideEffectWhenFailedResponse) {
-                    action.sideEffectWhenFailedResponse();
+                if (action.data.sideEffectWhenFailedResponse) {
+                    action.data.sideEffectWhenFailedResponse();
                 }
                 store.dispatch({
                     type: 'RECEIVE_ERROR',
-                    service: action.service,
-                    error: error.response,
+                    data: {
+                        service: action.data.service,
+                        error: error.response,
+                    }
                 })
             });
         return {
             ...state,
-            [action.service]: {
-                ...state[action.service],
+            [action.data.service]: {
+                ...state[action.data.service],
                 isCalling: true
             }
         };
     } if (action.type === 'MAKE_PUT_SERVICE_CALL') {
-        axios.put(action.service, action.request)
+        axios.put(action.data.service, action.data.request)
             .then((response) => {
-                if (action.sideEffectWhenOkResponse) {
-                    action.sideEffectWhenOkResponse();
+                if (action.data.sideEffectWhenOkResponse) {
+                    action.data.sideEffectWhenOkResponse();
                 }
                 store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
-                    service: action.service,
-                    response: response.data
+                    data: {
+                        service: action.data.service,
+                        response: response.data
+                    }
                 })
             }).catch((error) => {
-                if (action.sideEffectWhenFailedResponse) {
-                    action.sideEffectWhenFailedResponse();
+                if (action.data.sideEffectWhenFailedResponse) {
+                    action.data.sideEffectWhenFailedResponse();
                 }
                 store.dispatch({
                     type: 'RECEIVE_ERROR',
-                    service: action.service,
-                    error: error,
+                    data: {
+                        service: action.data.service,
+                        error: error,
+                    }
                 })
             });
         return {
             ...state,
-            [action.service]: {
-                ...state[action.service],
+            [action.data.service]: {
+                ...state[action.data.service],
                 isCalling: true
             }
         };
     } if (action.type === 'MAKE_POST_SERVICE_CALL') {
-        axios.post(action.service, action.request)
+        axios.post(action.data.service, action.data.request)
             .then((response) => {
                 store.dispatch({
                     type: 'RECEIVE_SERVICE_RESPONSE',
-                    service: action.service,
-                    response: response.data
+                    data: {
+                        service: action.data.service,
+                        response: response.data
+                    }
                 })
-                if (action.sideEffectWhenOkResponse) {
-                    action.sideEffectWhenOkResponse();
+                if (action.data.sideEffectWhenOkResponse) {
+                    action.data.sideEffectWhenOkResponse();
                 }
             }).catch((error) => {
                 store.dispatch({
                     type: 'RECEIVE_ERROR',
-                    service: action.service,
-                    error: error,
+                    data: {
+                        service: action.data.service,
+                        error: error,
+                    }
                 })
-                if (action.sideEffectWhenFailedResponse) {
-                    action.sideEffectWhenFailedResponse();
+                if (action.data.sideEffectWhenFailedResponse) {
+                    action.data.sideEffectWhenFailedResponse();
                 }
             });
         return {
             ...state,
-            [action.service]: {
-                ...state[action.service],
+            [action.data.service]: {
+                ...state[action.data.service],
                 isCalling: true
             }
         };
     } else if (action.type === 'RECEIVE_SERVICE_RESPONSE') {
-        console.group('SUCCESS -', action.service);
-        console.info(action.response);
-        console.groupEnd('SUCCESS', action.service);
+        console.group('SUCCESS -', action.data.service);
+        console.info(action.data.response);
+        console.groupEnd('SUCCESS', action.data.service);
         return {
             ...state,
-            [action.service]: {
+            [action.data.service]: {
                 isCalling: false,
-                response: action.response
+                response: action.data.response
             }
         }
     } else if (action.type === 'RECEIVE_ERROR') {
-        console.error(action.error);
+        console.group('ERROR -', action.data.service);
+        console.error(action.data.error);
+        console.groupEnd('ERROR -', action.data.service);
         return {
             ...state,
-            [action.service]: {
+            [action.data.service]: {
                 isCalling: false,
-                error: action.error
+                error: action.data.error
             }
         }
     }

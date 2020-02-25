@@ -8,7 +8,7 @@
   --darker-pink: rgb(189, 67, 97);
   --hajkbanansgul: rgb(255, 233, 33);
   --naranjas: rgb(253, 194, 39);
-  --adventuragrön: rgb(9, 176, 174);
+  --adventura-green: rgb(9, 176, 174);
   --morning-mist: rgb(227, 237, 228);
   --morning-shade: rgb(161, 196, 186);
   --input-inactive-bg-color: #f1f0f0;
@@ -45,7 +45,7 @@ body {
   background-color: var(--background);
 }
 
-h1 {
+h1, .h1 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 2rem;
   margin: 1rem;
@@ -55,7 +55,7 @@ h1 {
   text-shadow: 0px 0.2rem 0px rgba(0, 0, 0, 0.2);
 }
 
-h2 {
+h2, .h2 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1.5rem;
   color: white;
@@ -65,13 +65,26 @@ h2 {
   text-transform: uppercase;
 }
 
-h3 {
+h3, .h3 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  color: black;
+  font-size: 1.2rem;
+  color: white;
   text-shadow: 0px 0.1rem 0px rgba(0, 0, 0, 0.1);
-  margin: 0.5rem 0.5rem 0.5rem 0;
   font-weight: 900;
   text-transform: uppercase;
+  margin: 0.4rem 1rem 0.2rem 0rem;
+  padding: 0;
+}
+
+h4, .h4 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1.2rem;
+  color: black;
+  text-shadow: 0px 0.1rem 0px rgba(0, 0, 0, 0.1);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0.4rem 1rem 0.6rem 0rem;
+  padding: 0;
 }
 
 p {
@@ -180,7 +193,6 @@ textarea[type=text] {
   background-color: var(--input-inactive-bg-color);
   border-bottom-color: var(--input-inactive-border-bottom);
   width: 100%;
-  max-width: 523px;
   border-width: 0 0 3px;
   font-weight: 400;
   line-height: 1.25;
@@ -208,6 +220,7 @@ textarea[type=text]:focus {
   word-wrap: break-word;
   background-clip: border-box;
   box-shadow: 0;
+  margin-top: 1rem;
 }
 
 .card-block {
@@ -220,7 +233,6 @@ textarea[type=text]:focus {
 .card-header {
   background-color: var(--light-night);
   padding: 0.5rem 1.25rem;
-  margin-top: 1rem;
   margin-bottom: 0;
   width: 100%;
   border-radius: 0.2rem 0.2rem 0 0;
@@ -240,23 +252,34 @@ textarea[type=text]:focus {
 
 .info-card {
   background-color: #fff;
-  width: 90%;
-  margin: 1rem 1rem;
+  width: 100%;
   border-radius: 0.5rem;
   border: solid 2px rgba(0, 0, 0, 0.1);
 }
 
-.info-card:hover {
-  cursor: pointer;
-  border: solid 2px var(--dark-night);
-}
-
 .info-card-header {
   background-color: var(--light-night);
-  border-radius: 0.3rem 0.3rem 0 0;
-  padding: 0.5rem 1rem;
+  border-radius: 0.2rem 0.2rem 0 0;
+  padding: 0.2rem 1rem;
   color: white;
   border-bottom: solid var(--dark-night);
+}
+
+.info-card-header:hover {
+  background-color: var(--dark-night);
+  cursor: pointer;
+  border-bottom: solid rgba(0, 0, 0, 0.3)
+}
+
+.info-card-footer {
+  background-color: rgba(0, 0, 0, 0.03);
+  text-align: center;
+  border-radius: 0 0 0.37rem 0.37rem;
+  border-top: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-footer:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bg-pink {
@@ -277,8 +300,10 @@ textarea[type=text]:focus {
   width: 100%
 }
 
-.sticky+.content {
+.content {
   padding-top: 75px;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .add-text-shadow {
@@ -361,6 +386,7 @@ textarea[type=text]:focus {
   background: none;
   border: none;
   align-items: center;
+  cursor: pointer;
 }
 
 .btn-back:hover {
@@ -413,6 +439,10 @@ textarea[type=text]:focus {
   animation-timing-function: ease-in-out;
 }
 
+.bg-banangul {
+  background-color: var(--dark-pink);
+}
+
 /* Safari */
 
 @-webkit-keyframes spin {
@@ -434,4 +464,32 @@ textarea[type=text]:focus {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.editable-text-area {
+  cursor: text;
+  border: solid 1px rgba(0, 0, 0, 0);
+  width: 100%;
+  max-width: 523px;
+  padding: 0.2rem 0rem;
+}
+
+.editable-text-area:hover {
+  cursor: 'text';
+  border: solid 1px;
+  border: solid 1px rgba(9, 30, 66, 0.13);
+  border-radius: 0.3rem;
+  border: solid 1px var(--morning-mist);
+}
+
+.text-box-editor-button {
+  background-color: var(--input-inactive-bg-color);
+  border-radius: 0.3rem;
+  border-bottom-color: var(--input-inactive-border-bottom);
+  border-width: 0 0 3px;
+  cursor: pointer;
+}
+
+.text-box-editor-button:hover {
+  background-color: var(--input-inactive-border-bottom);
 }

@@ -10,12 +10,12 @@ function navigation(state = defaultState, action) {
     if (action.type === 'GO_TO_PAGE') {
         return {
             ...state,
-            page: action.page
+            page: action.data.page
         }
     } else if (action.type === 'SET_CHOSEN_FAULT_REPORT') {
         return {
             ...state,
-            selectedFaultReport: action.id
+            selectedFaultReport: action.data.id
         }
     }
 

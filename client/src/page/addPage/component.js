@@ -40,20 +40,21 @@ export default function () {
                             <Input
                                 className="m-1"
                                 title={'Rubrik'}
-                                value={core.getFaultReportField(state, 'header')}
+                                value={core.getFormField(state, 'addPage', 'header')}
                                 placeholder="Rubrik:"
                                 onChange={(event) => {
                                     event.preventDefault();
                                     triggerEvent({
                                         name: 'FORM_UPDATED',
                                         data: event.target.value,
+                                        page: 'addPage',
                                         inputField: 'header'
                                     })
                                 }} />
                             <Input
                                 className="mx-2 my-1"
                                 title={'Fastighetsnummer:'}
-                                value={core.getFaultReportField(state, 'propertyNumber')}
+                                value={core.getFormField(state, 'addPage', 'propertyNumber')}
                                 type="number"
                                 placeholder="Ex. 123"
                                 style={{ width: '13.2rem' }}
@@ -62,13 +63,14 @@ export default function () {
                                     triggerEvent({
                                         name: 'FORM_UPDATED',
                                         data: event.target.value,
+                                        page: 'addPage',
                                         inputField: 'propertyNumber'
                                     })
                                 }} />
                         </div>
                         <Input
                             className="m-1"
-                            value={core.getFaultReportField(state, 'location')}
+                            value={core.getFormField(state, 'addPage', 'location')}
                             title={'Plats:'}
                             style={{ width: '300px' }}
                             placeholder="Tex Köket"
@@ -77,6 +79,7 @@ export default function () {
                                 triggerEvent({
                                     name: 'FORM_UPDATED',
                                     data: event.target.value,
+                                    page: 'addPage',
                                     inputField: 'location'
                                 })
                             }} />
@@ -84,12 +87,13 @@ export default function () {
                             className="m-1"
                             style={{ width: '300px' }}
                             title="Gård:"
-                            value={core.getFaultReportField(state, 'reporter')}
+                            value={core.getFormField(state, 'addPage', 'reporter')}
                             onChange={(event) => {
                                 event.preventDefault();
                                 triggerEvent({
                                     name: 'FORM_UPDATED',
                                     data: event.target.value,
+                                    page: 'addPage',
                                     inputField: 'reporter'
                                 })
                             }}
@@ -98,7 +102,7 @@ export default function () {
                         />
                         <TextArea
                             className="m-1"
-                            value={core.getFaultReportField(state, 'description')}
+                            value={core.getFormField(state, 'addPage', 'description')}
                             title="Beskrivning"
                             placeholder="Beskriv felet..."
                             onChange={(event) => {
@@ -106,6 +110,7 @@ export default function () {
                                 triggerEvent({
                                     name: 'FORM_UPDATED',
                                     data: event.target.value,
+                                    page: 'addPage',
                                     inputField: 'description'
                                 })
                             }} />

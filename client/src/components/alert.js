@@ -1,0 +1,39 @@
+import React from "react";
+
+export default function () {
+    function AlertContent({
+        header,
+        body,
+        type,
+    }) {
+        const typeStyle = {
+            error: {
+                background: 'var(--dark-pink)'
+            },
+            success: {
+                background: 'var(--light-night)'
+            },
+            info: {
+                background: 'var(--minigrisrosa)'
+            }
+        }
+
+        return (
+            <div style={{
+                ...typeStyle[type],
+                border: '3px solid rgba(255, 255, 255, 0.2)',
+                width: '100%',
+                color: 'white'
+            }}
+                className="p-2 my-1">
+                <strong>{header}</strong>
+                {body && + ' - ' + body}
+            </div>
+        );
+    }
+
+
+    return function Alert(props) {
+        return <AlertContent {...props} />
+    }
+}

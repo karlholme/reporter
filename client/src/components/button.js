@@ -11,7 +11,8 @@ export default function () {
         style,
         disabled,
         spinner,
-        onClick
+        onClick,
+        icon
     }) {
         return (
             <button
@@ -20,23 +21,26 @@ export default function () {
                     primary: 'btn-primary',
                     submit: 'btn-primary',
                     back: 'btn-back align-items-center',
-                    delete: 'btn-delete'
+                    delete: 'btn-delete',
+                    small: 'text-box-editor-button d-flex align-items-center mr-1'
                 }[type] + ' ' + className}
                 disabled={disabled}
                 type={type}
                 style={style}
                 onClick={onClick} >
-                <span className="d-flex p-1 align-items-center">
+                <span className={'d-flex align-items-center' + (type != 'small' && '  p-1')}>
                     {type === 'back' && (<i className="material-icons">keyboard_backspace</i>)}
                     {type === 'delete' && (<i className="material-icons">close</i>)}
+                    {type === 'small' && (icon && <i style={{ fontSize: '1.2rem' }} className="material-icons">{icon}</i>)}
                     <span className={{
                         link: '',
                         nav: 'add-text-shadow',
                         primary: 'add-text-shadow',
                         submit: 'add-text-shadow',
-                        back: ''
+                        back: '',
+                        small: ''
                     }[type]}>
-                        {label}
+                        {label && label}
                     </span>
                     {spinner && <Spinner className="ml-1 loaderSmall" />}
                 </span>

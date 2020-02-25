@@ -3,12 +3,14 @@ import _ from 'lodash';
 import serviceEndpoints from '../../../serviceEndpoints.json'
 import spinnerMaker from '../../components/spinner';
 import clickableCardMaker from '../../components/clickableCard';
+import AlertMaker from '../../components/alert';
 import * as core from '../../core';
 
 export default function () {
 
     const Spinner = spinnerMaker();
     const ClickableCard = clickableCardMaker();
+    const Alert = AlertMaker();
 
     function OverviewContent({ state, triggerEvent }) {
 
@@ -26,13 +28,10 @@ export default function () {
                 {core.getFaultReports(state).map(function (faultReport) {
                     return (
                         <ClickableCard
+                            className="mb-2"
                             key={faultReport.createdOn + faultReport._id}
                             id={faultReport._id}
-                            header={faultReport.header}
-                            createdOn={faultReport.createdOn}
-                            location={faultReport.location}
-                            reporter={faultReport.reporter}
-                            description={faultReport.description}
+                            faultReport={faultReport}
                             onClick={function () {
                                 triggerEvent({ name: 'CARD_PRESSED', id: faultReport._id })
                             }}

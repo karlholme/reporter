@@ -51,7 +51,7 @@ export default function () {
                     </div>
                     <div className="d-flex row d-flex align-items-center mt-2">
                         <Input
-                            value={core.getFaultReportField(state, 'addReporter')}
+                            value={core.getFormField(state, 'detailsPage', 'addReporter')}
                             style={{ width: '200px' }}
                             placeholder="Lägg till gård"
                             onChange={(event) => {
@@ -59,19 +59,20 @@ export default function () {
                                 triggerEvent({
                                     name: 'FORM_UPDATED',
                                     data: event.target.value,
+                                    page: 'adminPage',
                                     inputField: 'addReporter'
                                 })
                             }} />
                         <Button
                             className="ml-2"
                             type='primary'
-                            label="Lägg till"
+                            label="Lì±„gg till"
                             spinner={core.isCallingService(state, serviceEndpoints.addReporter)}
                             disabled={core.isCallingService(state, serviceEndpoints.addReporter)}
                             onClick={function () {
                                 triggerEvent({
                                     name: 'REPORTER_ADDED',
-                                    reporter: core.getFaultReportField(state, 'addReporter')
+                                    reporter: core.getFormField(state, 'addReporter')
                                 });
                             }}
                         />

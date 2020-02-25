@@ -2,7 +2,7 @@ import React from "react";
 
 import AddPageComponentMaker from './page/addPage/component';
 import receiptPageMaker from './page/recepitPage/component';
-import overviewPageMaker from './page/overViewPage/component';
+import overviewPageMaker from './page/overviewPage/component';
 import detailsPageMaker from './page/detailPage/component';
 import adminPageMaker from './page/adminPage/component';
 
@@ -41,17 +41,6 @@ class App extends React.Component {
             <img className="img" width="300px" src={headerImage} alt="header image" />
           </div>
           <div>
-            <Button
-              type="primary"
-              label={'Admin'}
-              className="m-1"
-              onClick={function () {
-                store.dispatch({
-                  type: 'GO_TO_PAGE',
-                  page: core.pages.admin
-                })
-              }}
-            />
 
             <Button
               type="primary"
@@ -60,7 +49,9 @@ class App extends React.Component {
               onClick={function () {
                 store.dispatch({
                   type: 'GO_TO_PAGE',
-                  page: core.pages.overview
+                  data: {
+                    page: core.pages.overview
+                  }
                 })
               }}
             />
@@ -72,7 +63,23 @@ class App extends React.Component {
               onClick={function () {
                 store.dispatch({
                   type: 'GO_TO_PAGE',
-                  page: core.pages.add
+                  data: {
+                    page: core.pages.add
+                  }
+                })
+              }}
+            />
+
+            <Button
+              type="primary"
+              label={'Admin'}
+              className="m-1 bg-banangul"
+              onClick={function () {
+                store.dispatch({
+                  type: 'GO_TO_PAGE',
+                  data: {
+                    page: core.pages.admin
+                  }
                 })
               }}
             />
@@ -87,17 +94,23 @@ class App extends React.Component {
                 if (event.name === 'CARD_PRESSED') {
                   store.dispatch({
                     type: 'SET_CHOSEN_FAULT_REPORT',
-                    id: event.id
+                    data: {
+                      id: event.id
+                    }
                   })
                   store.dispatch({
                     type: 'GO_TO_PAGE',
-                    page: core.pages.details
+                    data: {
+                      page: core.pages.details
+                    }
                   })
                 } else if (event.name === 'COMPONENT_MOUNTED') {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
-                    request: {},
-                    service: serviceEndpoints.getFaultReports
+                    data: {
+                      request: {},
+                      service: serviceEndpoints.getFaultReports
+                    }
                   })
                 }
               }}
@@ -110,7 +123,80 @@ class App extends React.Component {
                 if (event.name === 'BACK_PRESSED') {
                   store.dispatch({
                     type: 'GO_TO_PAGE',
-                    page: core.pages.overview
+                    data: {
+                      page: core.pages.overview
+                    }
+                  })
+                } else if (event.name === 'UPDATE-DESCRIPTION') {
+                  store.dispatch({
+                    type: 'MAKE_POST_SERVICE_CALL',
+                    data: {
+                      request: {
+                        id: event.id,
+                        fieldToUpdate: 'description',
+                        newValue: event.newValue
+                      },
+                      service: serviceEndpoints.updateFaultReport,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            request: {},
+                            service: serviceEndpoints.getFaultReports
+                          }
+                        })
+                      }
+                    }
+                  })
+                } else if (event.name === 'FORM_UPDATED') {
+                  store.dispatch({
+                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                    data: {
+                      data: event.data,
+                      inputField: event.inputField,
+                      page: event.page
+                    }
+                  })
+                } else if (event.name === 'ADD-COMMENT-CLICKED') {
+                  store.dispatch({
+                    type: 'MAKE_POST_SERVICE_CALL',
+                    data: {
+                      service: serviceEndpoints.addComment,
+                      request: core.getAddCommentRequest(state),
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            request: {},
+                            service: serviceEndpoints.getFaultReports
+                          }
+                        })
+                        store.dispatch({
+                          type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                          data: {}
+                        })
+                      }
+                    }
+                  })
+                } else if (event.name === 'REMOVE-COMMENT') {
+                  store.dispatch({
+                    type: 'MAKE_PUT_SERVICE_CALL',
+                    data: {
+                      service: serviceEndpoints.removeComment,
+                      request: {
+                        faultReportId: event.data.faultReportId,
+                        commentId: event.data.commentId
+                      },
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            request: {},
+                            service: serviceEndpoints.getFaultReports
+                          }
+                        })
+                      }
+                    }
                   })
                 }
               }}
@@ -124,35 +210,47 @@ class App extends React.Component {
                 if (event.name === 'FAULT_REPORT_ADDED') {
                   store.dispatch({
                     type: 'GO_TO_PAGE',
-                    page: core.pages.receipt
+                    data: {
+                      page: core.pages.receipt
+                    }
                   })
                 } else if (event.name === 'FORM_SUBMITTED') {
                   store.dispatch({
                     type: 'MAKE_POST_SERVICE_CALL',
-                    request: core.getAddFaultReportRequest(state),
-                    service: serviceEndpoints.addFaultReport,
-                    sideEffectWhenOkResponse: function () {
-                      store.dispatch({
-                        type: 'GO_TO_PAGE',
-                        page: core.pages.receipt
-                      })
+                    data: {
+                      request: core.getAddFaultReportRequest(state),
+                      service: serviceEndpoints.addFaultReport,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'GO_TO_PAGE',
+                          data: {
+                            page: core.pages.receipt
+                          }
+                        })
+                      }
                     }
                   })
                 } else if (event.name === 'PAGE_MOUNTED') {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
-                    request: {},
-                    service: serviceEndpoints.getReporters
+                    data: {
+                      request: {},
+                      service: serviceEndpoints.getReporters
+                    }
                   })
                 } else if (event.name === 'FORM_UPDATED') {
                   store.dispatch({
                     type: 'UPDATE_ADD_FAULT_REPORT_FORM',
-                    data: event.data,
-                    inputField: event.inputField
+                    data: {
+                      data: event.data,
+                      inputField: event.inputField,
+                      page: event.page,
+                    }
                   })
                 } else if (event.name === 'CLEAN_PRESSED') {
                   store.dispatch({
-                    type: 'CLEAN_ADD_FAULT_REPORT_FORM'
+                    type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                    data: {}
                   })
                 }
               }}
@@ -167,42 +265,56 @@ class App extends React.Component {
                 if (event.name === 'PAGE_MOUNTED') {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
-                    request: {},
-                    service: serviceEndpoints.getReporters
+                    data: {
+                      request: {},
+                      service: serviceEndpoints.getReporters
+                    }
                   })
                 } else if (event.name === 'FORM_UPDATED') {
                   store.dispatch({
                     type: 'UPDATE_ADD_FAULT_REPORT_FORM',
-                    data: event.data,
-                    inputField: event.inputField
+                    data: {
+                      data: event.data,
+                      inputField: event.inputField,
+                      page: event.page
+                    }
                   })
                 } else if (event.name === 'REMOVE_REPORTER_CLICKED') {
                   store.dispatch({
                     type: 'MAKE_PUT_SERVICE_CALL',
-                    request: { id: event.id },
-                    service: serviceEndpoints.removeReporter,
-                    sideEffectWhenOkResponse: function () {
-                      store.dispatch({
-                        type: 'MAKE_GET_CALL_SERVICE',
-                        request: {},
-                        service: serviceEndpoints.getReporters
-                      })
+                    data: {
+                      request: { id: event.id },
+                      service: serviceEndpoints.removeReporter,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            request: {},
+                            service: serviceEndpoints.getReporters
+                          }
+                        })
+                      }
                     }
                   })
                 } else if (event.name === 'REPORTER_ADDED') {
                   store.dispatch({
                     type: 'MAKE_POST_SERVICE_CALL',
-                    request: { reporter: event.reporter },
-                    service: serviceEndpoints.addReporter,
-                    sideEffectWhenOkResponse: function () {
-                      store.dispatch({
-                        type: 'CLEAN_ADD_FAULT_REPORT_FORM'
-                      })
-                      store.dispatch({
-                        type: 'MAKE_GET_CALL_SERVICE',
-                        request: {},
-                        service: serviceEndpoints.getReporters
-                      })
+                    data: {
+                      request: { reporter: event.reporter },
+                      service: serviceEndpoints.addReporter,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                          data: {}
+                        })
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            request: {},
+                            service: serviceEndpoints.getReporters
+                          }
+                        })
+                      }
                     }
                   })
                 }

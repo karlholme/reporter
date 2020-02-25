@@ -1,7 +1,8 @@
-X Bygga tjänst för att lägga till och hämta upp gårdar
-- Bygga översikts-sida för att visa alla felanmälningar
-- Bygga detalj-sida för att visa enskild felanmälan
-X Fixa så att åäö lirar
-X Bygga metod för att veta när en tjänst håller på att hämtas, när den är efterfrågad och när svar finns
 
-X Bryt ut input till egna komponenter
+  Lägg till statusar
+  Felhantering i formulär
+  Mail-server
+  Lägg till kommentarer på en viss felanmälan
+  Användare
+  Responsivitet
+  Tillgänglighet

@@ -3,5 +3,8 @@
     "addReporter": "http://localhost:8081/api/addReporter",
     "removeReporter": "http://localhost:8081/api/removeReporter",
     "getReporters": "http://localhost:8081/api/getReporters",
-    "getFaultReports": "http://localhost:8081/api/getFaultReports"
+    "getFaultReports": "http://localhost:8081/api/getFaultReports",
+    "updateFaultReport": "http://localhost:8081/api/updateFaultReport",
+    "addComment": "http://localhost:8081/api/addComment",
+    "removeComment": "http://localhost:8081/api/removeComment"
 }
