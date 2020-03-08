@@ -12,4 +12,7 @@ require('./routes/getReporters')(router)
 require('./routes/addComment')(router)
 require('./routes/removeComment')(router)
 
+require('./routes/addStatus')(router)
+require('./routes/getStatuses')(router)
+
 module.exports = router

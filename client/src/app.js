@@ -1,7 +1,6 @@
 import React from "react";
 
 import AddPageComponentMaker from './page/addPage/component';
-import receiptPageMaker from './page/recepitPage/component';
 import overviewPageMaker from './page/overviewPage/component';
 import detailsPageMaker from './page/detailPage/component';
 import adminPageMaker from './page/adminPage/component';
@@ -14,7 +13,6 @@ import serviceEndpoints from '../serviceEndpoints.json'
 import buttonMaker from './components/button';
 
 const AddPageComponent = AddPageComponentMaker();
-const ReceiptPage = receiptPageMaker();
 const OverviewPage = overviewPageMaker();
 const DetailsPage = detailsPageMaker();
 const AdminPage = adminPageMaker();
@@ -33,6 +31,20 @@ class App extends React.Component {
   render() {
     const { store } = this.props;
     const state = store.getState();
+
+    console.log('getServiceResponse', core.getServiceResponse(state, serviceEndpoints.getStatuses), state);
+    console.log('isCallingService', core.isCallingService(state, serviceEndpoints.getStatuses), state);
+
+
+    if (!core.getServiceResponse(state, serviceEndpoints.getStatuses)
+      && !core.isCallingService(state, serviceEndpoints.getStatuses)) {
+      this.props.store.dispatch({
+        type: 'MAKE_GET_CALL_SERVICE',
+        data: {
+          service: serviceEndpoints.getStatuses
+        }
+      })
+    }
 
     return (
       <React.Fragment>
@@ -108,7 +120,6 @@ class App extends React.Component {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
                     data: {
-                      request: {},
                       service: serviceEndpoints.getFaultReports
                     }
                   })
@@ -141,7 +152,6 @@ class App extends React.Component {
                         store.dispatch({
                           type: 'MAKE_GET_CALL_SERVICE',
                           data: {
-                            request: {},
                             service: serviceEndpoints.getFaultReports
                           }
                         })
@@ -150,7 +160,7 @@ class App extends React.Component {
                   })
                 } else if (event.name === 'FORM_UPDATED') {
                   store.dispatch({
-                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                    type: 'UPDATE_FORMS',
                     data: {
                       data: event.data,
                       inputField: event.inputField,
@@ -167,12 +177,11 @@ class App extends React.Component {
                         store.dispatch({
                           type: 'MAKE_GET_CALL_SERVICE',
                           data: {
-                            request: {},
                             service: serviceEndpoints.getFaultReports
                           }
                         })
                         store.dispatch({
-                          type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                          type: 'CLEAN_FORMS',
                           data: {}
                         })
                       }
@@ -191,7 +200,6 @@ class App extends React.Component {
                         store.dispatch({
                           type: 'MAKE_GET_CALL_SERVICE',
                           data: {
-                            request: {},
                             service: serviceEndpoints.getFaultReports
                           }
                         })
@@ -207,14 +215,7 @@ class App extends React.Component {
               store={store}
               state={state}
               triggerEvent={(event) => {
-                if (event.name === 'FAULT_REPORT_ADDED') {
-                  store.dispatch({
-                    type: 'GO_TO_PAGE',
-                    data: {
-                      page: core.pages.receipt
-                    }
-                  })
-                } else if (event.name === 'FORM_SUBMITTED') {
+                if (event.name === 'FORM_SUBMITTED') {
                   store.dispatch({
                     type: 'MAKE_POST_SERVICE_CALL',
                     data: {
@@ -224,7 +225,7 @@ class App extends React.Component {
                         store.dispatch({
                           type: 'GO_TO_PAGE',
                           data: {
-                            page: core.pages.receipt
+                            page: core.pages.overview
                           }
                         })
                       }
@@ -234,13 +235,12 @@ class App extends React.Component {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
                     data: {
-                      request: {},
                       service: serviceEndpoints.getReporters
                     }
                   })
                 } else if (event.name === 'FORM_UPDATED') {
                   store.dispatch({
-                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                    type: 'UPDATE_FORMS',
                     data: {
                       data: event.data,
                       inputField: event.inputField,
@@ -249,7 +249,7 @@ class App extends React.Component {
                   })
                 } else if (event.name === 'CLEAN_PRESSED') {
                   store.dispatch({
-                    type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                    type: 'CLEAN_FORMS',
                     data: {}
                   })
                 }
@@ -266,17 +266,22 @@ class App extends React.Component {
                   store.dispatch({
                     type: 'MAKE_GET_CALL_SERVICE',
                     data: {
-                      request: {},
                       service: serviceEndpoints.getReporters
+                    }
+                  })
+                  store.dispatch({
+                    type: 'MAKE_GET_CALL_SERVICE',
+                    data: {
+                      service: serviceEndpoints.getStatuses
                     }
                   })
                 } else if (event.name === 'FORM_UPDATED') {
                   store.dispatch({
-                    type: 'UPDATE_ADD_FAULT_REPORT_FORM',
+                    type: 'UPDATE_FORMS',
                     data: {
                       data: event.data,
                       inputField: event.inputField,
-                      page: event.page
+                      page: event.page,
                     }
                   })
                 } else if (event.name === 'REMOVE_REPORTER_CLICKED') {
@@ -289,7 +294,6 @@ class App extends React.Component {
                         store.dispatch({
                           type: 'MAKE_GET_CALL_SERVICE',
                           data: {
-                            request: {},
                             service: serviceEndpoints.getReporters
                           }
                         })
@@ -304,14 +308,45 @@ class App extends React.Component {
                       service: serviceEndpoints.addReporter,
                       sideEffectWhenOkResponse: function () {
                         store.dispatch({
-                          type: 'CLEAN_ADD_FAULT_REPORT_FORM',
+                          type: 'CLEAN_FORMS',
                           data: {}
                         })
                         store.dispatch({
                           type: 'MAKE_GET_CALL_SERVICE',
                           data: {
-                            request: {},
                             service: serviceEndpoints.getReporters
+                          }
+                        })
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            service: serviceEndpoints.getStatuses
+                          }
+                        })
+                      }
+                    }
+                  })
+                } else if (event.name === 'STATUS_ADDED') {
+                  store.dispatch({
+                    type: 'MAKE_POST_SERVICE_CALL',
+                    data: {
+                      request: { status: event.status },
+                      service: serviceEndpoints.addStatus,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'CLEAN_FORMS',
+                          data: {}
+                        })
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            service: serviceEndpoints.getReporters
+                          }
+                        })
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            service: serviceEndpoints.getStatuses
                           }
                         })
                       }
@@ -319,14 +354,6 @@ class App extends React.Component {
                   })
                 }
               }}
-            />
-          )}
-
-          {core.getActivePage(state) === core.pages.receipt && (
-            <ReceiptPage
-              state={state}
-              store={store}
-              triggerEvent={() => null}
             />
           )}
         </div>

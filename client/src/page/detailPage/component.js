@@ -6,16 +6,18 @@ import buttonMaker from '../../components/button'
 import spinnerMaker from '../../components/spinner'
 import textAreaEditorMaker from '../../components/textAreaEditor'
 import textAreaMaker from '../../components/textArea'
-import AlertMaker from '../../components/alert'
+import alertMaker from '../../components/alert'
+import dropDownMaker from '../../components/dropdown'
 
 import * as core from '../../core';
 
 export default function () {
 
-    const Alert = AlertMaker();
+    const Alert = alertMaker();
     const Button = buttonMaker();
     const Spinner = spinnerMaker();
     const TextArea = textAreaMaker();
+    const Dropdown = dropDownMaker();
     const TextAreaEditor = textAreaEditorMaker();
 
     function DetailsContent({ state, triggerEvent }) {
@@ -72,6 +74,8 @@ export default function () {
                                     <p className="mb-1">Plats:</p>
                                     <p className="mb-1">Rapporterat:</p>
                                     <p className="mb-1">Fast. nr:</p>
+                                    <p className="mb-1">Prioritet</p>
+                                    <p className="mb-1">Status:</p>
                                 </div>
 
                                 <div className="ml-5">
@@ -79,6 +83,25 @@ export default function () {
                                     <p className="mb-1">{location || '-'}</p>
                                     <p className="mb-1">{core.formatDate(createdOn) || '-'}</p>
                                     <p className="mb-1">{propertyNumber || '-'}</p>
+                                    <p className="mb-1">{false || '-'}</p>
+                                    <p className="mb-1">
+                                        <Dropdown
+                                            className="m-1"
+                                            style={{ width: '300px' }}
+                                            value={core.getFormField(state, core.pages.details, 'currentStatus')}
+                                            onChange={(event) => {
+                                                event.preventDefault();
+                                                triggerEvent({
+                                                    name: 'FORM_UPDATED',
+                                                    data: event.target.value,
+                                                    page: core.pages.details,
+                                                    inputField: 'currentStatus'
+                                                })
+                                            }}
+                                            alternatives={core.getStatuses(state).map((status) => status.status)}
+                                            placeholder={'Välj din gård..'}
+                                        />
+                                    </p>
                                 </div>
                             </div>
                         </div>

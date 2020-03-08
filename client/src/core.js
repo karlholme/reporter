@@ -3,13 +3,16 @@ import serviceEndpoints from '../serviceEndpoints.json';
 export const pages = {
     overview: 'OVERVIEW_PAGE',
     add: 'ADD_PAGE',
-    receipt: 'RECEIPT_PAGE',
     details: 'DETAILS_PAGE',
     admin: 'ADMIN_PAGE'
 }
 
 export function getStartPage() {
     return pages.overview;
+}
+
+export function maybeCallSideEffect(state) {
+
 }
 
 export function translateFaultReportField(field) {
@@ -37,6 +40,10 @@ export function isCallingService(state, service) {
 
 export function getReporters(state) {
     return getServiceResponse(state, [serviceEndpoints.getReporters]);
+}
+
+export function getStatuses(state) {
+    return getServiceResponse(state, [serviceEndpoints.getStatuses]);
 }
 
 export function getAddFaultReportRequest(state) {
@@ -96,5 +103,7 @@ export function getAddedFaultReport(state) {
 }
 
 export function getChosenFaultReport(state) {
-    return getServiceResponse(state, serviceEndpoints.getFaultReports)[state.navigation.selectedFaultReport];
+    return _.find(getServiceResponse(state, serviceEndpoints.getFaultReports), function (faultReport) {
+        return faultReport._id === state.navigation.selectedFaultReport;
+    });
 }

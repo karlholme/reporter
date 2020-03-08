@@ -220,7 +220,6 @@ textarea[type=text]:focus {
   word-wrap: break-word;
   background-clip: border-box;
   box-shadow: 0;
-  margin-top: 1rem;
 }
 
 .card-block {
@@ -301,7 +300,7 @@ textarea[type=text]:focus {
 }
 
 .content {
-  padding-top: 75px;
+  padding-top: 85px;
   padding-left: 2rem;
   padding-right: 2rem;
 }

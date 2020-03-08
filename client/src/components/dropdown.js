@@ -11,7 +11,9 @@ export default function () {
     }) {
         return (
             <fieldset className={className} style={style}>
-                <label className="mr-1" id={title}>{title}</label>
+                {title &&
+                    <label className="mr-1" id={title}>{title}</label>
+                }
                 <select
                     style={style}
                     id={title}

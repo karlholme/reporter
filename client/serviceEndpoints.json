@@ -6,5 +6,7 @@
     "getFaultReports": "http://localhost:8081/api/getFaultReports",
     "updateFaultReport": "http://localhost:8081/api/updateFaultReport",
     "addComment": "http://localhost:8081/api/addComment",
-    "removeComment": "http://localhost:8081/api/removeComment"
+    "removeComment": "http://localhost:8081/api/removeComment",
+    "addStatus": "http://localhost:8081/api/addStatus",
+    "getStatuses": "http://localhost:8081/api/getStatuses"
 }

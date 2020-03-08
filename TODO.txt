@@ -1,8 +1,8 @@
-
-  Lägg till statusar
+  Lägg till och kunna ändra statusar
   Felhantering i formulär
   Mail-server
-  Lägg till kommentarer på en viss felanmälan
   Användare
   Responsivitet
   Tillgänglighet
+
+  x Lägg till kommentarer på en viss felanmälan

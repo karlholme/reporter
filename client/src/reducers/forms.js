@@ -1,21 +1,22 @@
 import * as core from '../core';
 
 const defaultState = {
-    addPage: {
+    [core.pages.add]: {
         header: '',
         description: '',
         propertyNumber: '',
         location: '',
         reporter: ''
     },
-    adminPage: {
-        addReporter: ''
+    [core.pages.admin]: {
+        addReporter: '',
+        addStatus: ''
     },
     [core.pages.details]: {}
 }
 
 function addReport(state = defaultState, action) {
-    if (action.type === 'UPDATE_ADD_FAULT_REPORT_FORM') {
+    if (action.type === 'UPDATE_FORMS') {
         return {
             ...state,
             [action.data.page]: {
@@ -23,7 +24,7 @@ function addReport(state = defaultState, action) {
                 [action.data.inputField]: action.data.data
             }
         }
-    } else if (action.type === 'CLEAN_ADD_FAULT_REPORT_FORM') {
+    } else if (action.type === 'CLEAN_FORMS') {
         return defaultState;
     }
 

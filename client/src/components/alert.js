@@ -5,13 +5,14 @@ export default function () {
         header,
         body,
         type,
+        className
     }) {
         const typeStyle = {
             error: {
                 background: 'var(--dark-pink)'
             },
             success: {
-                background: 'var(--light-night)'
+                background: 'var(--dark-night)'
             },
             info: {
                 background: 'var(--minigrisrosa)'
@@ -21,13 +22,14 @@ export default function () {
         return (
             <div style={{
                 ...typeStyle[type],
-                border: '3px solid rgba(255, 255, 255, 0.2)',
+                border: '3px solid rgba(0, 0, 0, 0.3)',
                 width: '100%',
-                color: 'white'
+                color: 'white',
+                borderRadius: '0.2rem'
             }}
-                className="p-2 my-1">
+                className={'p-2 my-1 ' + className}>
                 <strong>{header}</strong>
-                {body && + ' - ' + body}
+                {body && (' - ' + body)}
             </div>
         );
     }

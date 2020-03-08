@@ -1,37 +1,35 @@
 import serviceEndpoints from '../../serviceEndpoints.json'
 import axios from 'axios';
 import store from '../stores/configureStore';
+import * as core from '../core';
 
-const defaultState = {
-    [serviceEndpoints.addFaultReport]: {
-        isCalling: false,
-        response: null
-    },
-    [serviceEndpoints.getReporters]: {
-        isCalling: false,
-        response: null
-    },
-    [serviceEndpoints.getFaultReports]: {
-        isCalling: false,
-        response: null
-    },
-    [serviceEndpoints.updateFaultReport]: {
-        isCalling: false,
-        response: null
-    },
-    [serviceEndpoints.addFaultReport]: {
-        isCalling: false,
-        response: null
-    },
-    [serviceEndpoints.addReporter]: {
-        isCalling: false,
-        response: null
-    }
-};
+function getDefaultState() {
+    return _.values(serviceEndpoints).reduce(function (acc, curr) {
+        return _.merge(acc, {
+            [curr]: {
+                requested: false,
+                isCalling: false,
+                response: null
+            }
+        })
+    }, {})
+}
 
-function serviceCall(state = defaultState, action) {
+
+function logServiceCall(action, state) {
+    console.groupCollapsed('SERVICE CALL - ', action.data.service);
+    console.info(action.type);
+    console.info('Request: ', action.data.request);
+    console.info('Staet: ', state);
+    console.groupEnd('SERVICE CALL - ', action.data.service);
+}
+
+function serviceCall(state = getDefaultState(), action) {
+    console.log('defaultState', getDefaultState());
+
     if (action.type === 'MAKE_GET_CALL_SERVICE') {
-        axios.get(action.data.service, action.data.request)
+        logServiceCall(action, state);
+        axios.get(action.data.service)
             .then((response) => {
                 if (action.data.sideEffectWhenOkResponse) {
                     action.data.sideEffectWhenOkResponse();
@@ -63,6 +61,7 @@ function serviceCall(state = defaultState, action) {
             }
         };
     } if (action.type === 'MAKE_PUT_SERVICE_CALL') {
+        logServiceCall(action);
         axios.put(action.data.service, action.data.request)
             .then((response) => {
                 if (action.data.sideEffectWhenOkResponse) {
@@ -95,6 +94,7 @@ function serviceCall(state = defaultState, action) {
             }
         };
     } if (action.type === 'MAKE_POST_SERVICE_CALL') {
+        logServiceCall(action);
         axios.post(action.data.service, action.data.request)
             .then((response) => {
                 store.dispatch({
@@ -127,7 +127,7 @@ function serviceCall(state = defaultState, action) {
             }
         };
     } else if (action.type === 'RECEIVE_SERVICE_RESPONSE') {
-        console.group('SUCCESS -', action.data.service);
+        console.groupCollapsed('SUCCESS -', action.data.service);
         console.info(action.data.response);
         console.groupEnd('SUCCESS', action.data.service);
         return {

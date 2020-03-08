@@ -24,21 +24,33 @@ export default function () {
         }
 
         return (
-            <div className="card">
-                {core.getFaultReports(state).map(function (faultReport) {
-                    return (
-                        <ClickableCard
-                            className="mb-2"
-                            key={faultReport.createdOn + faultReport._id}
-                            id={faultReport._id}
-                            faultReport={faultReport}
-                            onClick={function () {
-                                triggerEvent({ name: 'CARD_PRESSED', id: faultReport._id })
-                            }}
-                        />
-                    );
-                })}
-            </div>
+            <React.Fragment>
+                {core.getServiceResponse(state, serviceEndpoints.addFaultReport) && (
+                    <Alert
+                        className="mb-3"
+                        header={'Felanmälan  tillagd'}
+                        body={'Felanmälan med id: '
+                            + core.getServiceResponse(state, serviceEndpoints.addFaultReport)._id
+                            + ' är nu  tillagd.'}
+                        type="success"
+                    />
+                )}
+                <div className="card">
+                    {core.getFaultReports(state).map(function (faultReport) {
+                        return (
+                            <ClickableCard
+                                className="mb-2"
+                                key={faultReport.createdOn + faultReport._id}
+                                id={faultReport._id}
+                                faultReport={faultReport}
+                                onClick={function () {
+                                    triggerEvent({ name: 'CARD_PRESSED', id: faultReport._id })
+                                }}
+                            />
+                        );
+                    })}
+                </div>
+            </React.Fragment>
         )
     }
 
