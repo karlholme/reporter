@@ -28,6 +28,7 @@ export default function () {
                 {onSaveAction &&
                     <div className="d-flex align-items-center justify-content-end">
                         <Button
+                            className="mr-1"
                             type='small'
                             onClick={onSaveAction}
                             icon="check"

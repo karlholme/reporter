@@ -15,7 +15,7 @@ export default function () {
                 className={'info-card ' + className}>
                 <div onClick={() => onClick()}
                     className="d-flex flex-row align-items-center info-card-header">
-                    <h2 className="h3 flex-grow-1">{id + '. ' + faultReport.header}</h2>
+                    <h2 className="h3 flex-grow-1 mt-2 mb-1">{id + '. ' + faultReport.header}</h2>
                     <div>{faultReport.priority || '-'}</div>
                 </div>
                 <div className="d-flex">

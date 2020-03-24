@@ -7697,6 +7697,7 @@ button.bg-dark:focus {
     align-self: stretch !important;
   }
 }
+*/
 
 .float-left {
   float: left !important;
@@ -7710,6 +7711,7 @@ button.bg-dark:focus {
   float: none !important;
 }
 
+/*
 @media (min-width: 576px) {
   .float-sm-left {
     float: left !important;

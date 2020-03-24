@@ -7,6 +7,7 @@ import buttonMaker from '../../components/button';
 import spinnerMaker from '../../components/spinner';
 
 import * as core from '../../core';
+import * as serviceCallUtil from '../../serviceCallUtil';
 
 export default function () {
 
@@ -18,18 +19,14 @@ export default function () {
 
     function AddPageContent({ state, triggerEvent }) {
 
-        useEffect(() => {
-            triggerEvent({ name: 'PAGE_MOUNTED' })
-        }, []);
-
-        if (!core.getServiceResponse(state, serviceEndpoints.getReporters)) {
+        if (!serviceCallUtil.getServiceResponse(state, serviceEndpoints.getReporters)) {
             return (<div className="d-flex justify-content-center m-5"><Spinner /></div>);
         }
 
         return (
             <div className="card">
                 <div className="card-header">
-                    <h1>Lägg till ny felanmälan</h1>
+                    <h1 className="mb-1 mt-2">Lägg till ny felanmälan</h1>
                 </div>
                 <div className="card-block float-center">
                     <form onSubmit={function (e) {
@@ -85,7 +82,7 @@ export default function () {
                             }} />
                         <Dropdown
                             className="m-1"
-                            style={{ width: '300px' }}
+                            style={{ width: '300px', height: '2.5rem' }}
                             title="Gård:"
                             value={core.getFormField(state, 'addPage', 'reporter')}
                             onChange={(event) => {
@@ -118,8 +115,8 @@ export default function () {
                             <Button
                                 label="Skicka"
                                 type="submit"
-                                spinner={!!core.isCallingService(state, serviceEndpoints.addFaultReport)}
-                                disabled={!!core.isCallingService(state, serviceEndpoints.addFaultReport)}
+                                spinner={!!serviceCallUtil.isCallingService(state, serviceEndpoints.addFaultReport)}
+                                disabled={!!serviceCallUtil.isCallingService(state, serviceEndpoints.addFaultReport)}
                             />
                             <Button
                                 className="pt-2 pr-1"

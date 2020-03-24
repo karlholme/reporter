@@ -1,4 +1,5 @@
 import serviceEndpoints from '../serviceEndpoints.json';
+import * as serviceCallUtil from './serviceCallUtil';
 
 export const pages = {
     overview: 'OVERVIEW_PAGE',
@@ -11,18 +12,32 @@ export function getStartPage() {
     return pages.overview;
 }
 
-export function maybeCallSideEffect(state) {
-
+export function maybeCallSideEffect(state, store) {
+    if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getStatuses)) {
+        store.dispatch({
+            type: 'MAKE_GET_CALL_SERVICE',
+            data: {
+                service: serviceEndpoints.getStatuses
+            }
+        })
+    } else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getReporters)) {
+        store.dispatch({
+            type: 'MAKE_GET_CALL_SERVICE',
+            data: {
+                service: serviceEndpoints.getReporters
+            }
+        })
+    }
 }
 
 export function translateFaultReportField(field) {
     return {
-        location: 'plats',
-        description: 'beskrivning',
-        header: 'rubrik',
-        propertyNumber: 'fastightetsnummer',
-        reporter: 'gård',
-        status: 'status'
+        location: 'Plats',
+        description: 'Beskrivning',
+        header: 'Rubrik',
+        propertyNumber: 'Fastightetsnummer',
+        reporter: 'Gård',
+        status: 'Status'
     }[field];
 }
 
@@ -30,20 +45,12 @@ export function getActivePage(state) {
     return state.navigation.page;
 }
 
-export function getServiceResponse(state, service) {
-    return state.serviceCall[service].response
-}
-
-export function isCallingService(state, service) {
-    return state.serviceCall[service].isCalling
-}
-
 export function getReporters(state) {
-    return getServiceResponse(state, [serviceEndpoints.getReporters]);
+    return serviceCallUtil.getServiceResponse(state, [serviceEndpoints.getReporters]);
 }
 
 export function getStatuses(state) {
-    return getServiceResponse(state, [serviceEndpoints.getStatuses]);
+    return serviceCallUtil.getServiceResponse(state, [serviceEndpoints.getStatuses]);
 }
 
 export function getAddFaultReportRequest(state) {
@@ -62,6 +69,7 @@ export function getAddCommentRequest(state) {
         id: state.navigation.selectedFaultReport,
         comment: {
             message: state.forms[pages.details]['addComment' + state.navigation.selectedFaultReport],
+            // TODO: When users are added, the right user shall be sent        
             reporter: "Solgården"
         }
     }
@@ -86,7 +94,7 @@ export function getFormField(state, page, field) {
 }
 
 export function getFaultReports(state) {
-    return getServiceResponse(state, serviceEndpoints.getFaultReports);
+    return serviceCallUtil.getServiceResponse(state, serviceEndpoints.getFaultReports);
 }
 
 export function formatDate(date) {
@@ -99,11 +107,11 @@ export function formatDate(date) {
 }
 
 export function getAddedFaultReport(state) {
-    return getServiceResponse(state, serviceEndpoints.addFaultReport);
+    return serviceCallUtil.getServiceResponse(state, serviceEndpoints.addFaultReport);
 }
 
 export function getChosenFaultReport(state) {
-    return _.find(getServiceResponse(state, serviceEndpoints.getFaultReports), function (faultReport) {
+    return _.find(serviceCallUtil.getServiceResponse(state, serviceEndpoints.getFaultReports), function (faultReport) {
         return faultReport._id === state.navigation.selectedFaultReport;
     });
 }

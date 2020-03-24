@@ -1,4 +1,4 @@
-  Lägg till och kunna ändra statusar
+  X Lägg till och kunna ändra statusar
   Felhantering i formulär
   Mail-server
   Användare

@@ -22,7 +22,7 @@ export default function () {
                     submit: 'btn-primary',
                     back: 'btn-back align-items-center',
                     delete: 'btn-delete',
-                    small: 'text-box-editor-button d-flex align-items-center mr-1'
+                    small: 'text-box-editor-button align-items-center'
                 }[type] + ' ' + className}
                 disabled={disabled}
                 type={type}

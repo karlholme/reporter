@@ -25,9 +25,24 @@ function logServiceCall(action, state) {
 }
 
 function serviceCall(state = getDefaultState(), action) {
-    console.log('defaultState', getDefaultState());
-
-    if (action.type === 'MAKE_GET_CALL_SERVICE') {
+    if (action.type === 'REQUEST_CALL') {
+        return {
+            ...state,
+            [action.data.service]: {
+                ...state[action.data.service],
+                requested: true,
+            }
+        };
+    } else if (action.type === 'REQUEST_REFETCH_CALL') {
+        return {
+            ...state,
+            [action.data.service]: {
+                ...state[action.data.service],
+                response: null,
+                requested: true,
+            }
+        };
+    } else if (action.type === 'MAKE_GET_CALL_SERVICE') {
         logServiceCall(action, state);
         axios.get(action.data.service)
             .then((response) => {
@@ -134,6 +149,7 @@ function serviceCall(state = getDefaultState(), action) {
             ...state,
             [action.data.service]: {
                 isCalling: false,
+                requested: false,
                 response: action.data.response
             }
         }
@@ -145,6 +161,7 @@ function serviceCall(state = getDefaultState(), action) {
             ...state,
             [action.data.service]: {
                 isCalling: false,
+                requested: false,
                 error: action.data.error
             }
         }

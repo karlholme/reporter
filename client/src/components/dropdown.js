@@ -10,7 +10,7 @@ export default function () {
         alternatives = [],
     }) {
         return (
-            <fieldset className={className} style={style}>
+            <fieldset className={className}>
                 {title &&
                     <label className="mr-1" id={title}>{title}</label>
                 }

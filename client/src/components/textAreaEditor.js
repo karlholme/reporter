@@ -35,6 +35,7 @@ export default function () {
 
                             <div className="d-flex align-items-center justify-content-end">
                                 <Button
+                                    className="mr-1"
                                     type='small'
                                     onClick={function () {
                                         textUpdated(value)

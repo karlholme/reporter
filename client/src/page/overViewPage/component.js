@@ -4,7 +4,9 @@ import serviceEndpoints from '../../../serviceEndpoints.json'
 import spinnerMaker from '../../components/spinner';
 import clickableCardMaker from '../../components/clickableCard';
 import AlertMaker from '../../components/alert';
+
 import * as core from '../../core';
+import * as serviceCallUtil from '../../serviceCallUtil';
 
 export default function () {
 
@@ -25,12 +27,12 @@ export default function () {
 
         return (
             <React.Fragment>
-                {core.getServiceResponse(state, serviceEndpoints.addFaultReport) && (
+                {serviceCallUtil.getServiceResponse(state, serviceEndpoints.addFaultReport) && (
                     <Alert
                         className="mb-3"
                         header={'Felanmälan  tillagd'}
                         body={'Felanmälan med id: '
-                            + core.getServiceResponse(state, serviceEndpoints.addFaultReport)._id
+                            + serviceCallUtil.getServiceResponse(state, serviceEndpoints.addFaultReport)._id
                             + ' är nu  tillagd.'}
                         type="success"
                     />

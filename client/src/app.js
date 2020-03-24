@@ -8,6 +8,7 @@ import adminPageMaker from './page/adminPage/component';
 import headerImage from '../assets/bo_header_2018.png';
 import favicon from '../assets/favicon.ico';
 import * as core from './core';
+import * as serviceCallUtil from './serviceCallUtil';
 import serviceEndpoints from '../serviceEndpoints.json'
 
 import buttonMaker from './components/button';
@@ -24,27 +25,38 @@ class App extends React.Component {
     // We need to do this to make react rerender when the start changes.
     // Other solutions would be to use provider: https://react-redux.js.org/api/provider
     this.props.store.subscribe(() => {
-      this.setState({});
+      this.forceUpdate();
     })
   }
 
-  render() {
-    const { store } = this.props;
+  componentDidUpdate() {
+    const store = this.props.store;
     const state = store.getState();
 
-    console.log('getServiceResponse', core.getServiceResponse(state, serviceEndpoints.getStatuses), state);
-    console.log('isCallingService', core.isCallingService(state, serviceEndpoints.getStatuses), state);
-
-
-    if (!core.getServiceResponse(state, serviceEndpoints.getStatuses)
-      && !core.isCallingService(state, serviceEndpoints.getStatuses)) {
+    if (!serviceCallUtil.serviceHasBeenCalled(state, serviceEndpoints.getStatuses)) {
       this.props.store.dispatch({
-        type: 'MAKE_GET_CALL_SERVICE',
+        type: 'REQUEST_CALL',
         data: {
           service: serviceEndpoints.getStatuses
         }
       })
     }
+
+    if (!serviceCallUtil.serviceHasBeenCalled(state, serviceEndpoints.getReporters)) {
+      this.props.store.dispatch({
+        type: 'REQUEST_CALL',
+        data: {
+          service: serviceEndpoints.getReporters
+        }
+      })
+    }
+
+    core.maybeCallSideEffect(state, store);
+  }
+
+  render() {
+    const { store } = this.props;
+    const state = store.getState();
 
     return (
       <React.Fragment>
@@ -206,6 +218,26 @@ class App extends React.Component {
                       }
                     }
                   })
+                } else if (event.name === 'UPDATE_STATUS') {
+                  store.dispatch({
+                    type: 'MAKE_POST_SERVICE_CALL',
+                    data: {
+                      request: {
+                        id: event.id,
+                        fieldToUpdate: 'status',
+                        newValue: event.newValue
+                      },
+                      service: serviceEndpoints.updateFaultReport,
+                      sideEffectWhenOkResponse: function () {
+                        store.dispatch({
+                          type: 'MAKE_GET_CALL_SERVICE',
+                          data: {
+                            service: serviceEndpoints.getFaultReports
+                          }
+                        })
+                      }
+                    }
+                  })
                 }
               }}
             />
@@ -229,13 +261,6 @@ class App extends React.Component {
                           }
                         })
                       }
-                    }
-                  })
-                } else if (event.name === 'PAGE_MOUNTED') {
-                  store.dispatch({
-                    type: 'MAKE_GET_CALL_SERVICE',
-                    data: {
-                      service: serviceEndpoints.getReporters
                     }
                   })
                 } else if (event.name === 'FORM_UPDATED') {
@@ -264,13 +289,13 @@ class App extends React.Component {
               triggerEvent={(event) => {
                 if (event.name === 'PAGE_MOUNTED') {
                   store.dispatch({
-                    type: 'MAKE_GET_CALL_SERVICE',
+                    type: 'REQUEST_CALL',
                     data: {
                       service: serviceEndpoints.getReporters
                     }
                   })
                   store.dispatch({
-                    type: 'MAKE_GET_CALL_SERVICE',
+                    type: 'REQUEST_CALL',
                     data: {
                       service: serviceEndpoints.getStatuses
                     }
