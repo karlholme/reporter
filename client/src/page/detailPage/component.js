@@ -46,7 +46,7 @@ export default function() {
       <React.Fragment>
         <Button
           type="back"
-          label="Tillbaka till รถversikten"
+          label="Tillbaka till översikten"
           onClick={function() {
             triggerEvent({ name: "BACK_PRESSED" });
           }}

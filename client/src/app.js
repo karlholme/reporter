@@ -30,28 +30,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    const store = this.props.store;
-    const state = store.getState();
-
-    if (!serviceCallUtil.serviceHasBeenCalled(state, serviceEndpoints.getStatuses)) {
-      this.props.store.dispatch({
-        type: 'REQUEST_CALL',
-        data: {
-          service: serviceEndpoints.getStatuses
-        }
-      })
-    }
-
-    if (!serviceCallUtil.serviceHasBeenCalled(state, serviceEndpoints.getReporters)) {
-      this.props.store.dispatch({
-        type: 'REQUEST_CALL',
-        data: {
-          service: serviceEndpoints.getReporters
-        }
-      })
-    }
-
-    core.maybeCallSideEffect(state, store);
+    core.maybeCallSideEffect(this.props.store.getState(), this.props.store);
   }
 
   render() {
@@ -128,13 +107,37 @@ class App extends React.Component {
                       page: core.pages.details
                     }
                   })
-                } else if (event.name === 'COMPONENT_MOUNTED') {
-                  store.dispatch({
-                    type: 'MAKE_GET_CALL_SERVICE',
-                    data: {
-                      service: serviceEndpoints.getFaultReports
-                    }
-                  })
+                }
+                else if (event.name === 'COMPONENT_MOUNTED') {
+
+                  if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getFaultReports)) {
+                    this.props.store.dispatch({
+                      type: 'REQUEST_CALL',
+                      data: {
+                        service: serviceEndpoints.getFaultReports
+                      }
+                    })
+                  }
+
+                  if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getStatuses)
+                    && !serviceCallUtil.getServiceResponse(this.props.store.getState(), serviceEndpoints.getStatuses)) {
+                    this.props.store.dispatch({
+                      type: 'REQUEST_CALL',
+                      data: {
+                        service: serviceEndpoints.getStatuses
+                      }
+                    })
+                  }
+
+                  if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getReporters)) {
+                    this.props.store.dispatch({
+                      type: 'REQUEST_CALL',
+                      data: {
+                        service: serviceEndpoints.getReporters
+                      }
+                    })
+                  }
+
                 }
               }}
             />
