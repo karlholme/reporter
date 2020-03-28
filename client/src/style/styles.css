@@ -206,6 +206,17 @@ textarea[type="text"]:focus {
     outline: 0;
 }
 
+.first-column-bold>tbody>tr>td:first-child {
+    font-weight: 700;
+}
+
+.break-last-column>tbody>tr>td:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
 .card {
     position: relative;
     align-items: center;

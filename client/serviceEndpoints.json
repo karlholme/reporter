@@ -8,5 +8,7 @@
     "addComment": "http://localhost:8081/api/addComment",
     "removeComment": "http://localhost:8081/api/removeComment",
     "addStatus": "http://localhost:8081/api/addStatus",
-    "getStatuses": "http://localhost:8081/api/getStatuses"
+    "getStatuses": "http://localhost:8081/api/getStatuses",
+    "getCategories": "http://localhost:8081/api/getCategories",
+    "addCategory": "http://localhost:8081/api/addCategory"
 }

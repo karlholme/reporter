@@ -21,6 +21,16 @@ export default function () {
                 {title &&
                     <label className="mr-1" id={title}>{title}</label>
                 }
+                {(title && required) && (<span style={{ marginLeft: '5px', color: invalidInputBordeColor }}>*</span>)}
+                {(!title && required) && (
+                    <div style={{
+                        marginLeft: '5px',
+                        color: invalidInputBordeColor,
+                        position: 'absolute',
+                        top: '3px',
+                        right: '5px'
+                    }}>*</div>
+                )}
                 <select
                     style={_.extend({},
                         style,

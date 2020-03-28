@@ -99,6 +99,24 @@ export default function () {
                             alternatives={core.getReporters(state).map((reporter) => reporter.reporter)}
                             placeholder="Välj din gård.."
                         />
+                        <Dropdown
+                            className="m-1 mt-3"
+                            style={{ width: '300px', height: '2.5rem' }}
+                            title="Kategori:"
+                            value={core.getFormField(state, 'addPage', 'category')}
+                            required
+                            onChange={(event) => {
+                                event.preventDefault();
+                                triggerEvent({
+                                    name: 'FORM_UPDATED',
+                                    data: event.target.value,
+                                    page: 'addPage',
+                                    inputField: 'category'
+                                })
+                            }}
+                            alternatives={core.getCategories(state).map((category) => category.category)}
+                            placeholder="Välj kategori.."
+                        />
                         <TextArea
                             className="m-1 mt-3"
                             value={core.getFormField(state, 'addPage', 'description')}

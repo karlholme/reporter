@@ -36,7 +36,8 @@ export default function () {
             priority,
             description,
             status,
-            comments
+            comments,
+            category
         } = faultReport;
 
         return (
@@ -61,35 +62,45 @@ export default function () {
                         </div>
                         <div className="" style={{ width: '40%' }}>
                             <h3 className="h4 mt-1 mb-2">Detaljer:</h3>
-                            <div className="d-flex">
-                                <div className="font-weight-bold ml-1">
-                                    <p className="mb-1">Status:</p>
-                                    <p className="mb-1">Rapporterat:</p>
-                                    <p className="mb-1">Gård:</p>
-                                    <p className="mb-1 ">Plats:</p>
+                            <table className="first-column-bold break-last-column" style={{
+                                width: '100%',
+                            }}>
+                                <tbody>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td>{status || '-'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rapporterat:</td>
+                                        <td>{core.formatDate(createdOn) || '-'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gård:</td>
+                                        <td>{reporter || '-'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plats:</td>
+                                        <td>{core.truncateText(location, 20) || '-'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kategori:</td>
+                                        <td>{category || '-'}</td>
+                                    </tr>
                                     {open && (
                                         <React.Fragment>
-                                            <p className="mb-1">Fast. nr:</p>
-                                            <p className="mb-1">Prioritet:</p>
+                                            <tr>
+                                                <td>Fast. nr:</td>
+                                                <td>{propertyNumber || '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Prioritet:</td>
+                                                <td>{priority || '-'}</td>
+                                            </tr>
                                         </React.Fragment>
-                                    )}
-                                </div>
 
-                                <div className="ml-5">
-                                    <div className="ml-1">
-                                        <p className="mb-1">{status || '-'}</p>
-                                        <p className="mb-1">{core.formatDate(createdOn) || '-'}</p>
-                                        <p className="mb-1">{reporter || '-'}</p>
-                                        <p className="mb-1">{location || '-'}</p>
-                                        {open && (
-                                            <React.Fragment>
-                                                <p className="mb-1">{propertyNumber || '-'}</p>
-                                                <p className="mb-1">{priority || '-'}</p>
-                                            </React.Fragment>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 

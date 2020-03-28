@@ -1,4 +1,4 @@
-  Felhantering i formulär
+  kategorier
   Filtrering på översiktssidan
   Användare
     Assigna användare till felanmälan
@@ -6,8 +6,9 @@
   Mail-server
   Tillgänglighet
 
-  X Lägg till och kunna ändra statusar
+  x Lägg till och kunna ändra statusar
   x Lägg till kommentarer på en viss felanmälan
+  x Felhantering i formulär
 
   Nice to have's:
     Animation när man öppnar felanmälan

@@ -19,8 +19,9 @@ export default function () {
             triggerEvent({ name: 'PAGE_MOUNTED' })
         }, []);
 
-        if (!serviceCallUtil.getServiceResponse(state, serviceEndpoints.getReporters)
-            || !serviceCallUtil.getServiceResponse(state, serviceEndpoints.getStatuses)) {
+        if (!serviceCallUtil.getServiceResponse(state, serviceEndpoints.getReporters) ||
+            !serviceCallUtil.getServiceResponse(state, serviceEndpoints.getStatuses) ||
+            !serviceCallUtil.getServiceResponse(state, serviceEndpoints.getCategories)) {
             return (<div className="d-flex justify-content-center m-5"><Spinner /></div>);
         }
 
@@ -31,32 +32,33 @@ export default function () {
                 </div>
 
                 <div className="card-block">
-                    <div className="d-flex row">
-
-                        <div className="flex-fill mr-5">
-                            <h2 className="ml-1 h4 my-1">Gårdar:</h2>
-                            {core.getReporters(state).map(function (reporter) {
-                                return (
-                                    <div style={{
-                                        paddingLeft: '0.2rem',
-                                        fontWeight: '700'
-                                    }}
-                                        className="d-flex row align-items-center ml-2 my-1"
-                                        key={reporter._id}>
-                                        <p className="flex-grow-1">{reporter.reporter}</p>
-                                        <Button
-                                            type="delete"
-                                            onClick={function () {
-                                                triggerEvent({
-                                                    name: 'REMOVE_REPORTER_CLICKED',
-                                                    id: reporter._id
-                                                })
-                                            }}
-                                        />
-                                    </div>
-                                );
-                            })}
-                            <div className="d-flex justify-content-end row align-items-center mt-2">
+                    <div className="mb-3">
+                        <h2 className="h4 mt-0">Gårdar:</h2>
+                        {core.getReporters(state).map(function (reporter) {
+                            return (
+                                <div style={{ fontWeight: '500' }}
+                                    className="d-flex row align-items-center my-1"
+                                    key={reporter._id}>
+                                    <Button
+                                        type="delete"
+                                        onClick={function () {
+                                            triggerEvent({
+                                                name: 'REMOVE_REPORTER_CLICKED',
+                                                id: reporter._id
+                                            })
+                                        }}
+                                    />
+                                    <p className="ml-2">{reporter.reporter}</p>
+                                </div>
+                            );
+                        })}
+                        <form onSubmit={function () {
+                            triggerEvent({
+                                name: 'REPORTER_ADDED',
+                                reporter: core.getFormField(state, core.pages.admin, 'addReporter')
+                            });
+                        }}>
+                            <div className="d-flex align-items-center">
                                 <Input
                                     value={core.getFormField(state, core.pages.admin, 'addReporter')}
                                     style={{ width: '200px' }}
@@ -72,45 +74,43 @@ export default function () {
                                         })
                                     }} />
                                 <Button
-                                    className="mt-1"
+                                    className="ml-2"
+                                    label="Lägg till"
                                     spinner={serviceCallUtil.isCallingService(state, serviceEndpoints.addReporter)}
                                     disabled={serviceCallUtil.isCallingService(state, serviceEndpoints.addReporter)}
-                                    type='small'
                                     icon="check"
-                                    onClick={function () {
-                                        triggerEvent({
-                                            name: 'REPORTER_ADDED',
-                                            reporter: core.getFormField(state, core.pages.admin, 'addReporter')
-                                        });
-                                    }}
+                                    type='submit'
                                 />
                             </div>
-                        </div>
-
-                        <div className="flex-fill">
-                            <h2 className="ml-1 h4 my-1">Statusar:</h2>
-                            {core.getStatuses(state).map(function (status) {
-                                return (
-                                    <div style={{
-                                        paddingLeft: '0.2rem',
-                                        fontWeight: '700'
-                                    }}
-                                        className="d-flex row align-items-center ml-2 my-1"
-                                        key={status._id}>
-                                        <p className="flex-grow-1">{status.status}</p>
-                                        <Button
-                                            type="delete"
-                                            onClick={function () {
-                                                triggerEvent({
-                                                    name: 'REMOVE_STATUS_CLICKED',
-                                                    id: status._id
-                                                })
-                                            }}
-                                        />
-                                    </div>
-                                );
-                            })}
-                            <div className="align-items-center mt-2">
+                        </form>
+                    </div>
+                    <div className="mb-3">
+                        <h2 className="h4">Statusar:</h2>
+                        {core.getStatuses(state).map(function (status) {
+                            return (
+                                <div style={{ fontWeight: '500' }}
+                                    className="d-flex row align-items-center my-1"
+                                    key={status._id}>
+                                    <Button
+                                        type="delete"
+                                        onClick={function () {
+                                            triggerEvent({
+                                                name: 'REMOVE_STATUS_CLICKED',
+                                                id: status._id
+                                            })
+                                        }}
+                                    />
+                                    <p className="ml-2">{status.status}</p>
+                                </div>
+                            );
+                        })}
+                        <form onSubmit={function () {
+                            triggerEvent({
+                                name: 'STATUS_ADDED',
+                                status: core.getFormField(state, core.pages.admin, 'addStatus')
+                            });
+                        }}>
+                            <div className="d-flex align-items-center mt-2">
                                 <Input
                                     value={core.getFormField(state, core.pages.admin, 'addStatus')}
                                     style={{ width: '200px' }}
@@ -125,23 +125,67 @@ export default function () {
                                         })
                                     }} />
                                 <Button
-                                    className="mt-1 float-right"
-                                    type='primary'
+                                    className="ml-2"
+                                    type='submit'
                                     label="Lägg till"
                                     spinner={serviceCallUtil.isCallingService(state, serviceEndpoints.addStatus)}
                                     disabled={serviceCallUtil.isCallingService(state, serviceEndpoints.addStatus)}
-                                    onClick={function () {
-                                        triggerEvent({
-                                            name: 'STATUS_ADDED',
-                                            status: core.getFormField(state, core.pages.admin, 'addStatus')
-                                        });
-                                    }}
                                 />
                             </div>
-                        </div>
-
-
+                        </form>
                     </div>
+                    <div className="mb-3">
+                        <h2 className="h4">Kategorier:</h2>
+                        {core.getCategories(state).map(function (c) {
+                            return (
+                                <div style={{ fontWeight: '500' }}
+                                    className="d-flex row align-items-center my-1"
+                                    key={c._id}>
+                                    <Button
+                                        type="delete"
+                                        onClick={function () {
+                                            triggerEvent({
+                                                name: 'REMOVE_CATEGORY_CLICKED',
+                                                id: c._id
+                                            })
+                                        }}
+                                    />
+                                    <p className="ml-2">{c.category}</p>
+                                </div>
+                            );
+                        })}
+                        <form onSubmit={function () {
+                            triggerEvent({
+                                name: 'ADD_CATEGORY_PRESSED',
+                                status: core.getFormField(state, core.pages.admin, 'addCategory')
+                            });
+                        }}>
+                            <div className="d-flex align-items-center mt-2">
+                                <Input
+                                    value={core.getFormField(state, core.pages.admin, 'addCategory')}
+                                    style={{ width: '200px' }}
+                                    placeholder="Lägg till kategori"
+                                    onChange={(event) => {
+                                        event.preventDefault();
+                                        triggerEvent({
+                                            name: 'FORM_UPDATED',
+                                            data: event.target.value,
+                                            page: core.pages.admin,
+                                            inputField: 'addCategory'
+                                        })
+                                    }} />
+                                <Button
+                                    className="ml-2"
+                                    type='submit'
+                                    label="Lägg till"
+                                    spinner={serviceCallUtil.isCallingService(state, serviceEndpoints.addCategory)}
+                                    disabled={serviceCallUtil.isCallingService(state, serviceEndpoints.addCategory)}
+                                />
+                            </div>
+                        </form>
+                    </div>
+
+
                 </div>
             </div>
         )

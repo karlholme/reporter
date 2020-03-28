@@ -15,4 +15,8 @@ require('./routes/removeComment')(router)
 require('./routes/addStatus')(router)
 require('./routes/getStatuses')(router)
 
+require('./routes/addCategory')(router)
+require('./routes/getCategories')(router)
+
+
 module.exports = router

@@ -17,6 +17,7 @@ const faultReportSchema = new mongoose.Schema({
     reporter: { type: String, required: true },
     createdOn: { type: Date, default: Date.now },
     status: { type: String, required: true },
+    category: { type: String, required: true, default: 'Övrigt' },
     comments: { type: [commentSchema] }
 })
 
