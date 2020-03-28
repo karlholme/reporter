@@ -15,6 +15,8 @@
     --input-active-bg-color: #f1f0f0;
     --input-active-border-bottom: var(--light-night);
     --input-inactive-border-bottom: #e6e3e3;
+    --input-invalid-border-color: rgb(208, 20, 84);
+    --input-invalid-background-color: rgb(243, 235, 235);
     --background: rgb(232, 232, 232);
 }
 
@@ -110,7 +112,6 @@ label {
     line-height: 1.25;
     font-weight: 800;
     text-align: left;
-    width: 100%;
     font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: black;
     font-weight: 900;

@@ -1,8 +1,14 @@
-  X Lägg till och kunna ändra statusar
   Felhantering i formulär
-  Mail-server
+  Filtrering på översiktssidan
   Användare
+    Assigna användare till felanmälan
   Responsivitet
+  Mail-server
   Tillgänglighet
 
+  X Lägg till och kunna ändra statusar
   x Lägg till kommentarer på en viss felanmälan
+
+  Nice to have's:
+    Animation när man öppnar felanmälan
+    Animationer över lag

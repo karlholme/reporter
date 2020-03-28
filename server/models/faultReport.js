@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
 
 const faultReportSchema = new mongoose.Schema({
     _id: Number,
-    header: { type: String, required: true, default: 'Felanmälan' },
+    header: { type: String, required: true },
     description: { type: String, required: true },
     priority: { type: Number, min: 0, max: 1000 },
     propertyNumber: { type: Number },

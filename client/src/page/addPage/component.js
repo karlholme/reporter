@@ -33,12 +33,13 @@ export default function () {
                         e.preventDefault();
                         triggerEvent({ name: 'FORM_SUBMITTED' })
                     }}>
-                        <div className="d-flex mt-1">
+                        <div className="d-flex">
                             <Input
-                                className="m-1"
-                                title={'Rubrik'}
+                                className="mt-2"
+                                title={'Rubrik:'}
                                 value={core.getFormField(state, 'addPage', 'header')}
-                                placeholder="Rubrik:"
+                                placeholder="Kort sammanfattning av ärendet"
+                                required
                                 onChange={(event) => {
                                     event.preventDefault();
                                     triggerEvent({
@@ -49,11 +50,11 @@ export default function () {
                                     })
                                 }} />
                             <Input
-                                className="mx-2 my-1"
+                                className="mt-2 mx-2"
                                 title={'Fastighetsnummer:'}
                                 value={core.getFormField(state, 'addPage', 'propertyNumber')}
                                 type="number"
-                                placeholder="Ex. 123"
+                                placeholder="t.ex. 750"
                                 style={{ width: '13.2rem' }}
                                 onChange={(event) => {
                                     event.preventDefault();
@@ -66,11 +67,11 @@ export default function () {
                                 }} />
                         </div>
                         <Input
-                            className="m-1"
+                            className="m-1 mt-3"
                             value={core.getFormField(state, 'addPage', 'location')}
                             title={'Plats:'}
                             style={{ width: '300px' }}
-                            placeholder="Tex Köket"
+                            placeholder="Plats där problemet uppstått"
                             onChange={(event) => {
                                 event.preventDefault();
                                 triggerEvent({
@@ -81,10 +82,11 @@ export default function () {
                                 })
                             }} />
                         <Dropdown
-                            className="m-1"
+                            className="m-1 mt-3"
                             style={{ width: '300px', height: '2.5rem' }}
                             title="Gård:"
                             value={core.getFormField(state, 'addPage', 'reporter')}
+                            required
                             onChange={(event) => {
                                 event.preventDefault();
                                 triggerEvent({
@@ -95,13 +97,14 @@ export default function () {
                                 })
                             }}
                             alternatives={core.getReporters(state).map((reporter) => reporter.reporter)}
-                            placeholder={'Välj din gård..'}
+                            placeholder="Välj din gård.."
                         />
                         <TextArea
-                            className="m-1"
+                            className="m-1 mt-3"
                             value={core.getFormField(state, 'addPage', 'description')}
                             title="Beskrivning"
-                            placeholder="Beskriv felet..."
+                            placeholder="Ge en så utförlig beskrivning av problemet som ni kan.."
+                            required
                             onChange={(event) => {
                                 event.preventDefault();
                                 triggerEvent({

@@ -61,6 +61,7 @@ export default function () {
                                     value={core.getFormField(state, core.pages.admin, 'addReporter')}
                                     style={{ width: '200px' }}
                                     placeholder="Lägg till gård"
+                                    required
                                     onChange={(event) => {
                                         event.preventDefault();
                                         triggerEvent({
