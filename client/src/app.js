@@ -153,7 +153,7 @@ class App extends React.Component {
                                         type: 'UPDATE_FILTER',
                                         data: {
                                             filter: event.data.filter,
-                                            value: event.data.status,
+                                            value: event.data.value,
                                             show: event.data.checked
                                         }
                                     })

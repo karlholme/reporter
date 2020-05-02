@@ -38,7 +38,7 @@ export default function () {
             textShadow: '0px 0.1rem 0px rgba(0, 0, 0, 0.1)'
         };
 
-        const filtersClassName = 'mb-1';
+        const filterCheckboxesClasses = 'mb-1';
 
         return (
             <React.Fragment>
@@ -52,21 +52,37 @@ export default function () {
                         type='success'
                     />
                 )}
-                <div className="row">
-                    <div className="col">
+                <div className="d-flex justify-content-center mb-1">
+                    <div className="col-3">
                         <h2 style={filterHeaderStyle}>Status:</h2>
+                        <Checkbox
+                            key={'status-all'}
+                            label={'Alla'}
+                            checked={core.isAllFiltersActive(state, 'status')}
+                            className={filterCheckboxesClasses}
+                            onChange={function (checked) {
+                                triggerEvent({
+                                    name: "FILTER_SELECTED",
+                                    data: {
+                                        filter: 'status',
+                                        value: 'all',
+                                        checked: checked
+                                    }
+                                });
+                            }}
+                        />
                         {core.getStatusValues(state).map(function (v) {
                             return (<Checkbox
                                 key={v}
                                 label={v}
                                 checked={core.isFilterActive(state, 'status', v)}
-                                className={filtersClassName}
+                                className={filterCheckboxesClasses}
                                 onChange={function (checked) {
                                     triggerEvent({
                                         name: "FILTER_SELECTED",
                                         data: {
                                             filter: 'status',
-                                            status: v,
+                                            value: v,
                                             checked: checked
                                         }
                                     });
@@ -74,20 +90,36 @@ export default function () {
                             />)
                         })}
                     </div>
-                    <div className="col">
+                    <div className="col-3">
                         <h2 style={filterHeaderStyle}>Gård:</h2>
+                        <Checkbox
+                            key={'status-all'}
+                            label={'Alla'}
+                            checked={core.isAllFiltersActive(state, 'reporter')}
+                            className={filterCheckboxesClasses}
+                            onChange={function (checked) {
+                                triggerEvent({
+                                    name: "FILTER_SELECTED",
+                                    data: {
+                                        filter: 'reporter',
+                                        value: 'all',
+                                        checked: checked
+                                    }
+                                });
+                            }}
+                        />
                         {core.getReportersFilterValues(state).map(function (v) {
                             return (<Checkbox
                                 key={v}
                                 label={v}
-                                className={filtersClassName}
+                                className={filterCheckboxesClasses}
                                 checked={core.isFilterActive(state, 'reporter', v)}
                                 onChange={function (checked) {
                                     triggerEvent({
                                         name: "FILTER_SELECTED",
                                         data: {
                                             filter: 'reporter',
-                                            status: v,
+                                            value: v,
                                             checked: checked
                                         }
                                     });
@@ -95,20 +127,36 @@ export default function () {
                             />)
                         })}
                     </div>
-                    <div className="col">
+                    <div className="col-3">
                         <h2 style={filterHeaderStyle}>Kategori:</h2>
+                        <Checkbox
+                            key={'status-all'}
+                            label={'Alla'}
+                            checked={core.isAllFiltersActive(state, 'category')}
+                            className={filterCheckboxesClasses}
+                            onChange={function (checked) {
+                                triggerEvent({
+                                    name: "FILTER_SELECTED",
+                                    data: {
+                                        filter: 'category',
+                                        value: 'all',
+                                        checked: checked
+                                    }
+                                });
+                            }}
+                        />
                         {core.getCategoryFilterValues(state).map(function (v) {
                             return (<Checkbox
                                 key={v}
                                 label={v}
-                                className={filtersClassName}
+                                className={filterCheckboxesClasses}
                                 checked={core.isFilterActive(state, 'category', v)}
                                 onChange={function (checked) {
                                     triggerEvent({
                                         name: "FILTER_SELECTED",
                                         data: {
                                             filter: 'category',
-                                            status: v,
+                                            value: v,
                                             checked: checked
                                         }
                                     });

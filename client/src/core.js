@@ -188,6 +188,12 @@ export function isFilterActive(state, filter, value) {
     return state.filters[filter][value];
 }
 
+export function isAllFiltersActive(state, filterCategory) {
+    return _.values(state.filters[filterCategory]).every(function (f) {
+        return f;
+    });
+}
+
 export function formatDate(date) {
     const parsedDate = new Date(date);
     return (
