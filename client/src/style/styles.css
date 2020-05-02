@@ -17,6 +17,7 @@
     --input-inactive-border-bottom: #e6e3e3;
     --input-invalid-border-color: rgb(208, 20, 84);
     --input-invalid-background-color: rgb(243, 235, 235);
+    --light-gray: rgb(75, 75, 75);
     --background: rgb(232, 232, 232);
 }
 
@@ -72,7 +73,6 @@ h3, .h3 {
     color: white;
     text-shadow: 0px 0.1rem 0px rgba(0, 0, 0, 0.1);
     font-weight: 900;
-    text-transform: uppercase;
     padding: 0;
 }
 
@@ -82,7 +82,6 @@ h4, .h4 {
     color: var(--dark-night);
     text-shadow: none;
     font-weight: 600;
-    text-transform: uppercase;
     padding-left: 0.3rem;
     border-bottom: solid 2px var(--dark-night);
 }
@@ -106,7 +105,7 @@ fieldset {
     display: block;
 }
 
-label {
+.label {
     display: inline-block;
     font-size: 16px;
     line-height: 1.25;

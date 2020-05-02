@@ -18,7 +18,7 @@ export default function () {
         const [invalid, setInvalid] = useState(false);
         return (
             <fieldset className={className} style={{ position: 'relative' }}>
-                {title && <label>{title}</label>}
+                {title && <label className="label">{title}</label>}
                 {(title && required) && (<span style={{ marginLeft: '5px', color: invalidInputBordeColor }}>*</span>)}
                 {(!title && required) && (
                     <div style={{
@@ -39,6 +39,7 @@ export default function () {
                         } : null)}
                     placeholder={placeholder}
                     onChange={function (e) {
+                        e.preventDefault();
                         onChange(e)
                         setInvalid(false)
                     }}

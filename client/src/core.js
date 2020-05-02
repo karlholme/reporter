@@ -1,5 +1,6 @@
 import serviceEndpoints from '../serviceEndpoints.json';
 import * as serviceCallUtil from './serviceCallUtil';
+import _ from 'lodash';
 
 export const pages = {
     overview: 'OVERVIEW_PAGE',
@@ -13,33 +14,65 @@ export function getStartPage() {
 }
 
 export function maybeCallSideEffect(state, store) {
-    if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getStatuses)) {
-        store.dispatch({
-            type: 'MAKE_GET_CALL_SERVICE',
-            data: {
-                service: serviceEndpoints.getStatuses
-            }
-        });
-    }
-    else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getReporters)) {
-        store.dispatch({
-            type: 'MAKE_GET_CALL_SERVICE',
-            data: {
-                service: serviceEndpoints.getReporters
-            }
-        })
-    } else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getFaultReports)) {
+    if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getFaultReports)) {
         store.dispatch({
             type: 'MAKE_GET_CALL_SERVICE',
             data: {
                 service: serviceEndpoints.getFaultReports
             }
         })
+    } else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getStatuses)) {
+        store.dispatch({
+            type: 'MAKE_GET_CALL_SERVICE',
+            data: {
+                service: serviceEndpoints.getStatuses,
+                sideEffectWhenOkResponse: function (response) {
+                    store.dispatch({
+                        type: 'ADD_FILTERS',
+                        data: {
+                            type: 'status',
+                            values: response.data.map(function (s) {
+                                return s.status;
+                            })
+                        }
+                    })
+                }
+            }
+        });
+    } else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getReporters)) {
+        store.dispatch({
+            type: 'MAKE_GET_CALL_SERVICE',
+            data: {
+                service: serviceEndpoints.getReporters,
+                sideEffectWhenOkResponse: function (response) {
+                    store.dispatch({
+                        type: 'ADD_FILTERS',
+                        data: {
+                            type: 'reporter',
+                            values: response.data.map(function (r) {
+                                return r.reporter;
+                            })
+                        }
+                    })
+                }
+            }
+        })
     } else if (serviceCallUtil.shouldCallService(state, serviceEndpoints.getCategories)) {
         store.dispatch({
             type: 'MAKE_GET_CALL_SERVICE',
             data: {
-                service: serviceEndpoints.getCategories
+                service: serviceEndpoints.getCategories,
+                sideEffectWhenOkResponse: function (response) {
+                    store.dispatch({
+                        type: 'ADD_FILTERS',
+                        data: {
+                            type: 'category',
+                            values: response.data.map(function (s) {
+                                return s.category;
+                            })
+                        }
+                    })
+                }
             }
         })
     }
@@ -115,18 +148,54 @@ export function getFaultReports(state) {
     return serviceCallUtil.getServiceResponse(state, serviceEndpoints.getFaultReports);
 }
 
+export function getFaultReportFilters(state) {
+    return _.keys(state.filters);
+}
+
+export function getStatusValues(state) {
+    return _.keys(state.filters.status);
+}
+
+export function getReportersFilterValues(state) {
+    return _.keys(state.filters.reporter);
+}
+
+export function getCategoryFilterValues(state) {
+    return _.keys(state.filters.category);
+}
+
+export function getFilterdFaultReports(state) {
+    let faultReports = getFaultReports(state);
+
+    const allFiltersInState = _.keys(state.filters);
+    function faultReportsFilterNotIncludedInAllFilters(faultReport, filter) {
+        return !_.includes(_.keys(state.filters[filter]), faultReport[filter]);
+    }
+
+    allFiltersInState.map(function (filter) {
+        faultReports = faultReports.filter(function (faultReport) {
+            if (faultReportsFilterNotIncludedInAllFilters(faultReport, filter)) {
+                return true;
+            }
+            return state.filters[filter][faultReport[filter]];
+        })
+    })
+
+    return faultReports;
+}
+
+export function isFilterActive(state, filter, value) {
+    return state.filters[filter][value];
+}
+
 export function formatDate(date) {
-    const paresedDate = new Date(date);
+    const parsedDate = new Date(date);
     return (
-        paresedDate.getDate() +
-        '/' +
-        paresedDate.getMonth() +
-        '-' +
-        paresedDate.getFullYear() +
-        '  - ' +
-        paresedDate.getHours() +
-        ':' +
-        paresedDate.getMinutes()
+        parsedDate.getDate() + '/' +
+        parsedDate.getMonth() + '-' +
+        parsedDate.getFullYear() + '  - ' +
+        parsedDate.getHours() + ':' +
+        parsedDate.getMinutes()
     );
 }
 

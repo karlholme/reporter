@@ -22,7 +22,7 @@ export default function () {
         return (
             <fieldset style={{ maxWidth: '30rem' }} className={className}>
                 <div className="d-flex">
-                    <label>{title}</label>
+                    <label className="label">{title}</label>
                     {required && (<span style={{ marginLeft: '5px', color: invalidInputBordeColor }}>*</span>)}
                 </div>
                 <textarea

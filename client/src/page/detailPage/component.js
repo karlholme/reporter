@@ -90,10 +90,12 @@ export default function () {
                                             onChange={event => {
                                                 event.preventDefault();
                                                 triggerEvent({
-                                                    name: "FORM_UPDATED",
-                                                    data: event.target.value,
-                                                    page: core.pages.details,
-                                                    inputField: "currentStatus" + _id
+                                                    name: "FILTER_SELECTED",
+                                                    data: {
+                                                        add: true,
+                                                        filter: 'status',
+                                                        item: 'done'
+                                                    }
                                                 });
                                             }}
                                             alternatives={core

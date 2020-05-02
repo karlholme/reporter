@@ -16,7 +16,7 @@ export default function () {
 
         return (
             <fieldset className={className}>
-                {title && <label>{title}</label>}
+                {title && <label className="label">{title}</label>}
 
                 {editing ?
                     (

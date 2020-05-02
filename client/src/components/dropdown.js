@@ -19,7 +19,7 @@ export default function () {
         return (
             <fieldset className={className}>
                 {title &&
-                    <label className="mr-1" id={title}>{title}</label>
+                    <label className="mr-1 label" id={title}>{title}</label>
                 }
                 {(title && required) && (<span style={{ marginLeft: '5px', color: invalidInputBordeColor }}>*</span>)}
                 {(!title && required) && (

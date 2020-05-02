@@ -107,8 +107,7 @@ class App extends React.Component {
                                             page: core.pages.details
                                         }
                                     })
-                                }
-                                else if (event.name === 'COMPONENT_MOUNTED') {
+                                } else if (event.name === 'COMPONENT_MOUNTED') {
 
                                     if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getFaultReports)
                                         && !serviceCallUtil.getServiceResponse(this.props.store.getState(), serviceEndpoints.getFaultReports)) {
@@ -126,7 +125,7 @@ class App extends React.Component {
                                             type: 'REQUEST_CALL',
                                             data: {
                                                 service: serviceEndpoints.getStatuses
-                                            }
+                                            },
                                         })
                                     }
 
@@ -149,6 +148,15 @@ class App extends React.Component {
                                             }
                                         })
                                     }
+                                } else if (event.name === 'FILTER_SELECTED') {
+                                    store.dispatch({
+                                        type: 'UPDATE_FILTER',
+                                        data: {
+                                            filter: event.data.filter,
+                                            value: event.data.status,
+                                            show: event.data.checked
+                                        }
+                                    })
                                 }
 
                             }}
