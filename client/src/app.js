@@ -107,8 +107,16 @@ class App extends React.Component {
                                             page: core.pages.details
                                         }
                                     })
+                                } else if (event.name === 'FORM_UPDATED') {
+                                    store.dispatch({
+                                        type: 'UPDATE_FORMS',
+                                        data: {
+                                            data: event.data,
+                                            inputField: event.inputField,
+                                            page: event.page
+                                        }
+                                    })
                                 } else if (event.name === 'COMPONENT_MOUNTED') {
-
                                     if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getFaultReports)
                                         && !serviceCallUtil.getServiceResponse(this.props.store.getState(), serviceEndpoints.getFaultReports)) {
                                         this.props.store.dispatch({
@@ -118,7 +126,6 @@ class App extends React.Component {
                                             }
                                         })
                                     }
-
                                     if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getStatuses)
                                         && !serviceCallUtil.getServiceResponse(this.props.store.getState(), serviceEndpoints.getStatuses)) {
                                         this.props.store.dispatch({
@@ -128,7 +135,6 @@ class App extends React.Component {
                                             },
                                         })
                                     }
-
                                     if (!serviceCallUtil.serviceHasBeenRequested(this.props.store.getState(), serviceEndpoints.getReporters)
                                         && !serviceCallUtil.getServiceResponse(this.props.store.getState(), serviceEndpoints.getReporters)) {
                                         this.props.store.dispatch({

@@ -12,7 +12,10 @@ const defaultState = {
         addReporter: '',
         addStatus: ''
     },
-    [core.pages.details]: {}
+    [core.pages.details]: {},
+    [core.pages.overview]: {
+        sortOrder: 'Skapad'
+    }
 }
 
 function addReport(state = defaultState, action) {

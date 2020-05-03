@@ -184,6 +184,26 @@ export function getFilterdFaultReports(state) {
     return faultReports;
 }
 
+export function getActiveFaultReportSorting(state) {
+    return {
+        Gård: 'reporter',
+        Status: 'status',
+        Kategori: 'category',
+        Skapad: 'createdOn'
+    }[getFormField(state, pages.overview, 'sortOrder')];
+}
+
+export function getSortedFaultReports(faultReports, sortBy) {
+    if (sortBy === 'date') {
+        return _.sortBy(faultReports, function (fr) {
+            return new Date(fr[sortBy]);
+        })
+    }
+    return _.sortBy(faultReports, function (fr) {
+        return fr[sortBy];
+    })
+}
+
 export function isFilterActive(state, filter, value) {
     return state.filters[filter][value];
 }

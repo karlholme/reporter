@@ -9,12 +9,14 @@ import AlertMaker from '../../components/alert';
 
 import * as core from '../../core';
 import * as serviceCallUtil from '../../serviceCallUtil';
+import dropdownMaker from '../../components/dropdown';
 
 export default function () {
     const Spinner = spinnerMaker();
     const ClickableCard = clickableCardMaker();
     const Alert = AlertMaker();
     const Checkbox = checkboxMaker();
+    const Dropdown = dropdownMaker();
 
     function OverviewContent({ state, triggerEvent }) {
         useEffect(() => {
@@ -166,8 +168,28 @@ export default function () {
                     </div>
                 </div>
 
+                <div>
+                    <Dropdown
+                        className="m-1 mt-3"
+                        style={{ width: '300px', height: '2.5rem' }}
+                        title="Sortera på:"
+                        value={core.getFormField(state, core.pages.overview, 'sortOrder')}
+                        onChange={function (event) {
+                            event.preventDefault();
+                            triggerEvent({
+                                name: 'FORM_UPDATED',
+                                data: event.target.value,
+                                page: core.pages.overview,
+                                inputField: 'sortOrder'
+                            })
+                        }}
+                        alternatives={['Skapad', 'Gård', 'Status', 'Kategori']}
+                        placeholder="Sortera på"
+                    />
+                </div>
+
                 <div className='card'>
-                    {core.getFilterdFaultReports(state).map(function (faultReport) {
+                    {core.getSortedFaultReports(core.getFilterdFaultReports(state), core.getActiveFaultReportSorting(state)).map(function (faultReport) {
                         return (
                             <ClickableCard
                                 className='mb-2'
