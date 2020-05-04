@@ -14,7 +14,7 @@ const defaultState = {
     },
     [core.pages.details]: {},
     [core.pages.overview]: {
-        sortOrder: 'Skapad'
+        sortOrder: 'Nyast'
     }
 }
 

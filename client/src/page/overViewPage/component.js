@@ -314,7 +314,7 @@ export default function () {
                     <div>
                         <Dropdown
                             className=""
-                            style={{ width: '300px', height: '2.5rem' }}
+                            style={{ width: '200px', height: '2rem' }}
                             title="Sortera på:"
                             value={core.getSortOnValue(state)}
                             onChange={function (event) {
@@ -326,7 +326,7 @@ export default function () {
                                     inputField: 'sortOrder'
                                 })
                             }}
-                            alternatives={['Skapad', 'Gård', 'Status', 'Kategori']}
+                            alternatives={['Nyast', 'Äldst', 'Gård', 'Status', 'Kategori']}
                             placeholder="Sortera på"
                         />
                     </div>

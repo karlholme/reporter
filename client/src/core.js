@@ -185,7 +185,8 @@ function getActiveFaultReportSorting(sortBy) {
         Gård: 'reporter',
         Status: 'status',
         Kategori: 'category',
-        Skapad: 'createdOn'
+        Nyast: 'newest',
+        Äldst: 'oldest'
     }[sortBy];
 }
 
@@ -195,6 +196,10 @@ export function getFaultReportsSorted(faultReports, sortOn) {
         return _.sortBy(faultReports, function (fr) {
             return new Date(fr[mappedSorting]);
         })
+    } else if (mappedSorting === 'newest') {
+        return _.orderBy(faultReports, ['createdOn'], ['desc'])
+    } else if (mappedSorting === 'oldest') {
+        return _.orderBy(faultReports, ['createdOn'], [])
     }
     return _.sortBy(faultReports, function (fr) {
         return fr[mappedSorting];
