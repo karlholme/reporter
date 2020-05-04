@@ -9,6 +9,7 @@ import commentMaker from '../../components/comment';
 import datePickerMaker from '../../components/datePicker';
 import dropdownMaker from '../../components/dropdown';
 import inputMaker from '../../components/input';
+import searchInputMaker from '../../components/searchInput';
 
 import * as core from '../../core';
 import * as serviceCallUtil from '../../serviceCallUtil';
@@ -21,6 +22,7 @@ export default function () {
     const Input = inputMaker();
     const Comment = commentMaker();
     const DatePicker = datePickerMaker();
+    const SearchInput = searchInputMaker();
 
     function FaultReportCard({
         className,
@@ -47,7 +49,7 @@ export default function () {
         return (
             <div key={id} className={'info-card ' + className}>
                 <div
-                    onClick={() => onClick()}
+                    onClick={function () { onClick() }}
                     className="d-flex flex-row align-items-center info-card-header">
                     <h2 className="h3 flex-grow-1 mt-2 mb-1">{id + '. ' + header}</h2>
                     <div>{priority || '-'}</div>
@@ -159,7 +161,7 @@ export default function () {
     }
 
     function OverviewContent({ state, triggerEvent }) {
-        useEffect(() => {
+        useEffect(function () {
             triggerEvent({ name: 'COMPONENT_MOUNTED' })
         }, []);
 
@@ -181,8 +183,6 @@ export default function () {
         };
 
         const filterCheckboxesClasses = 'mb-1';
-
-        console.log(core.getFilteredAndSortedFaultReports(state));
 
         return (
             <React.Fragment>
@@ -332,17 +332,15 @@ export default function () {
                     </div>
 
                     <div>
-                        <Input
+                        <SearchInput
                             className=""
+                            inputStyle={{ width: '300px', height: '2rem' }}
                             title={'Sök:'}
-                            value={core.getFormField(state, core.pages.overview, 'search')}
-                            placeholder="Sök på rubrik, beskrivning, gård"
-                            required
-                            onChange={(event) => {
-                                event.preventDefault();
+                            placeholder="Sök på beskrivning, rubrik, id, plats.."
+                            onChange={function (value) {
                                 triggerEvent({
                                     name: 'FORM_UPDATED',
-                                    data: event.target.value,
+                                    data: value,
                                     page: core.pages.overview,
                                     inputField: 'search'
                                 })
