@@ -148,7 +148,7 @@ export function getFaultReports(state) {
     return serviceCallUtil.getServiceResponse(state, serviceEndpoints.getFaultReports);
 }
 
-export function getFaultReportFilters(state) {
+export function getFaultReportFilterCategories(state) {
     return _.keys(state.filters);
 }
 
@@ -164,44 +164,78 @@ export function getCategoryFilterValues(state) {
     return _.keys(state.filters.category);
 }
 
-export function getFilterdFaultReports(state) {
-    let faultReports = getFaultReports(state);
-
-    const allFiltersInState = _.keys(state.filters);
+export function getFaultReportsFiltered(faultReports, filters) {
     function faultReportsFilterNotIncludedInAllFilters(faultReport, filter) {
-        return !_.includes(_.keys(state.filters[filter]), faultReport[filter]);
+        return !_.includes(_.keys(filters[filter]), faultReport[filter]);
     }
 
-    allFiltersInState.map(function (filter) {
+    _.keys(filters).map(function (filter) {
         faultReports = faultReports.filter(function (faultReport) {
             if (faultReportsFilterNotIncludedInAllFilters(faultReport, filter)) {
                 return true;
             }
-            return state.filters[filter][faultReport[filter]];
+            return filters[filter][faultReport[filter]];
         })
     })
-
     return faultReports;
 }
 
-export function getActiveFaultReportSorting(state) {
+function getActiveFaultReportSorting(sortBy) {
     return {
         Gård: 'reporter',
         Status: 'status',
         Kategori: 'category',
         Skapad: 'createdOn'
-    }[getFormField(state, pages.overview, 'sortOrder')];
+    }[sortBy];
 }
 
-export function getSortedFaultReports(faultReports, sortBy) {
-    if (sortBy === 'date') {
+export function getFaultReportsSorted(faultReports, sortOn) {
+    const mappedSorting = getActiveFaultReportSorting(sortOn)
+    if (mappedSorting === 'date') {
         return _.sortBy(faultReports, function (fr) {
-            return new Date(fr[sortBy]);
+            return new Date(fr[mappedSorting]);
         })
     }
     return _.sortBy(faultReports, function (fr) {
-        return fr[sortBy];
+        return fr[mappedSorting];
     })
+}
+
+export function getFaultReportsFilteredBySearchString(faultReports, searchString) {
+    if (!searchString) {
+        return faultReports;
+    }
+
+    return faultReports.filter(function (f) {
+        const stringToCompareTo =
+            f.description
+            + f.reporter
+            + f.header
+            + f.propertyNumber
+            + f.location
+            + f._id
+            + f.category
+            + f.status;
+        return stringToCompareTo.match(new RegExp('(\\w*' + searchString + '\\w*)', 'gi'))
+    })
+}
+
+export function getSortOnValue(state) {
+    return getFormField(state, pages.overview, 'sortOrder');
+}
+
+export function getSearchString(state) {
+    return getFormField(state, pages.overview, 'search');
+}
+
+export function getFilteredAndSortedFaultReports(state) {
+    var faultReports = getFaultReports(state);
+
+    faultReports = getFaultReportsFiltered(faultReports, state.filters);
+    faultReports = getFaultReportsSorted(faultReports, getSortOnValue(state));
+    faultReports = getFaultReportsFilteredBySearchString(faultReports, getSearchString(state));
+
+    return faultReports;
 }
 
 export function isFilterActive(state, filter, value) {

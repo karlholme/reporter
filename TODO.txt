@@ -3,6 +3,8 @@
     Assigna användare till felanmälan
   Responsivitet
   Mail-server
+  Routing och url-hantering
+  Implementera log
   Tillgänglighet
 
   x Sortera

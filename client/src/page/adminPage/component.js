@@ -42,6 +42,7 @@ export default function () {
                                     <Button
                                         type="delete"
                                         onClick={function () {
+                                            console.log('press');
                                             triggerEvent({
                                                 name: 'REMOVE_REPORTER_CLICKED',
                                                 id: reporter._id
@@ -157,7 +158,7 @@ export default function () {
                         <form onSubmit={function () {
                             triggerEvent({
                                 name: 'ADD_CATEGORY_PRESSED',
-                                status: core.getFormField(state, core.pages.admin, 'addCategory')
+                                category: core.getFormField(state, core.pages.admin, 'addCategory')
                             });
                         }}>
                             <div className="d-flex align-items-center mt-2">

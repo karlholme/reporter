@@ -406,6 +406,54 @@ class App extends React.Component {
                                             }
                                         }
                                     })
+                                } else if (event.name === 'REMOVE_STATUS_CLICKED') {
+                                    store.dispatch({
+                                        type: 'MAKE_PUT_SERVICE_CALL',
+                                        data: {
+                                            request: { id: event.id },
+                                            service: serviceEndpoints.removeStatus,
+                                            sideEffectWhenOkResponse: function () {
+                                                store.dispatch({
+                                                    type: 'MAKE_GET_CALL_SERVICE',
+                                                    data: {
+                                                        service: serviceEndpoints.getStatuses
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    })
+                                } else if (event.name === 'REMOVE_CATEGORY_CLICKED') {
+                                    store.dispatch({
+                                        type: 'MAKE_PUT_SERVICE_CALL',
+                                        data: {
+                                            request: { id: event.id },
+                                            service: serviceEndpoints.removeCategory,
+                                            sideEffectWhenOkResponse: function () {
+                                                store.dispatch({
+                                                    type: 'MAKE_GET_CALL_SERVICE',
+                                                    data: {
+                                                        service: serviceEndpoints.getCategories
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    })
+                                } else if (event.name === 'ADD_CATEGORY_PRESSED') {
+                                    store.dispatch({
+                                        type: 'MAKE_POST_SERVICE_CALL',
+                                        data: {
+                                            request: { category: event.category },
+                                            service: serviceEndpoints.addCategory,
+                                            sideEffectWhenOkResponse: function () {
+                                                store.dispatch({
+                                                    type: 'MAKE_GET_CALL_SERVICE',
+                                                    data: {
+                                                        service: serviceEndpoints.getCategories
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    })
                                 }
                             }}
                         />
