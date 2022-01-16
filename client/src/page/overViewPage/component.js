@@ -78,7 +78,7 @@ export default function () {
                                     </tr>
                                     <tr>
                                         <td>Rapporterat:</td>
-                                        <td>{core.formatDate(createdOn) || '-'}</td>
+                                        <td>{core.formatDateAndTime(createdOn) || '-'}</td>
                                     </tr>
                                     <tr>
                                         <td>Gård:</td>
@@ -111,7 +111,7 @@ export default function () {
                     </div>
 
                     {open &&
-                        <div className="">
+                        <div>
                             <h3 className="h4 mt-2 mb-3">Kommentarer:</h3>
                             {(!_.isEmpty(comments) ? (
                                 comments.map(function (comment) {
@@ -310,11 +310,11 @@ export default function () {
                     </div>
                 </div>
 
-                <div className="d-flex">
+                <div className="d-flex justify-content-between mx-4">
                     <div>
                         <Dropdown
                             className=""
-                            style={{ width: '200px', height: '2rem' }}
+                            style={{ width: '150px', height: '2rem' }}
                             title="Sortera på:"
                             value={core.getSortOnValue(state)}
                             onChange={function (event) {
@@ -334,7 +334,7 @@ export default function () {
                     <div>
                         <SearchInput
                             className=""
-                            inputStyle={{ width: '300px', height: '2rem' }}
+                            inputStyle={{ width: '250px', height: '2rem' }}
                             title={'Sök:'}
                             placeholder="Sök på beskrivning, rubrik, id, plats.."
                             onChange={function (value) {
@@ -347,9 +347,27 @@ export default function () {
                             }} />
                     </div>
 
-                    <div>
-                        <DatePicker />
-                    </div>
+                    <DatePicker
+                        label="Datum:"
+                        fromDate={core.getFormField(state, core.pages.overview, 'fromDate')}
+                        onFromDateChosen={function (fromDate) {
+                            triggerEvent({
+                                name: 'FORM_UPDATED',
+                                data: fromDate,
+                                page: core.pages.overview,
+                                inputField: 'fromDate'
+                            })
+                        }}
+                        toDate={core.getFormField(state, core.pages.overview, 'toDate')}
+                        onToDateChosen={function (toDate) {
+                            triggerEvent({
+                                name: 'FORM_UPDATED',
+                                data: toDate,
+                                page: core.pages.overview,
+                                inputField: 'toDate'
+                            })
+                        }}
+                    />
                 </div>
 
                 <div className='card'>

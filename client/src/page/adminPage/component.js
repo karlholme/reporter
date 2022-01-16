@@ -42,7 +42,6 @@ export default function () {
                                     <Button
                                         type="delete"
                                         onClick={function () {
-                                            console.log('press');
                                             triggerEvent({
                                                 name: 'REMOVE_REPORTER_CLICKED',
                                                 id: reporter._id

@@ -13,7 +13,9 @@ export default function () {
         style = { width: '300px' },
         placeholder,
         onChange,
-        required
+        required,
+        onFocus = function () { },
+        onBlur = function () { }
     }) {
         const [invalid, setInvalid] = useState(false);
         return (
@@ -46,6 +48,12 @@ export default function () {
                     required={required}
                     onInvalid={function (e) {
                         setInvalid(true);
+                    }}
+                    onFocus={function () {
+                        onFocus();
+                    }}
+                    onBlur={function () {
+                        onBlur();
                     }}
                 />
 

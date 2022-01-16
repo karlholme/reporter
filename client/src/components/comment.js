@@ -24,7 +24,7 @@ export default function () {
                         </strong>
                         <p className="ml-1">
                             {" lade till en kommentar - " +
-                                core.formatDate(createdOn) +
+                                core.formatDateAndTime(createdOn) +
                                 ":"}
                         </p>
                         <Button

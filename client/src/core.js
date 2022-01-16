@@ -258,6 +258,15 @@ export function formatDate(date) {
     return (
         parsedDate.getDate() + '/' +
         parsedDate.getMonth() + '-' +
+        parsedDate.getFullYear()
+    );
+}
+
+export function formatDateAndTime(date) {
+    const parsedDate = new Date(date);
+    return (
+        parsedDate.getDate() + '/' +
+        parsedDate.getMonth() + '-' +
         parsedDate.getFullYear() + '  - ' +
         parsedDate.getHours() + ':' +
         parsedDate.getMinutes()
